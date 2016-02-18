@@ -27,7 +27,7 @@
             app.bindEvents();
         },
         bindEvents: function() {
-             console.log(app.$all_checked);
+            console.log(app.$all_checked);
             app.$wrapper.on('change', '.hDivBox .all-checked', app.onClickAllChecked);
             app.$wrapper.on('click', '.item-checkbox', app.selectMember);
             // app.$all_checked.bind('click', app.onClickAllChecked);
@@ -148,7 +148,7 @@
                 align: 'center',
                 process: function(div, sn) {
                     var openaccount = Number(div.innerHTML);
-                    
+                    console.info(sn);
                     // if(openaccount===0){
                         var $input = $('<input type="checkbox" class="item-checkbox"/>');
 

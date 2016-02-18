@@ -298,7 +298,7 @@
                width: 80, 
                align: 'center'
             }, {
-               display: '出貨日期',
+               display: '取貨日期',
                name: 'date2', 
                width: 80, 
                align: 'center'   

@@ -20,12 +20,12 @@ class c316 extends pub\GatewayApi{
         // }
 
         if (count($checkData) == 0) return ;
-        $checkDate = '0000-00-00';
+        // $checkDate = '0000-00-00';
         $options = array(
             'select' => 'odm001 as id, odm022, odm029 AS fare, odm030 AS total',
             'conditions' => array(
-                'odm005 > ? AND odm001 IN (?) AND odm006 BETWEEN ? AND ?',
-                $checkDate,
+                'odm005 IS NOT NULL AND odm001 IN (?) AND odm005 BETWEEN ? AND ?',
+                // $checkDate,
                 $checkData,
                 $date1,
                 $date2
@@ -33,7 +33,7 @@ class c316 extends pub\GatewayApi{
             'group' => 'odm022'
         );
 
-        $order = Order::find('all', $options);
+        $order = Order::find('all', $options);\
 
         $count = count($order);
         if ($count == 0) return $this->fail('訂貨單目前尚無已核帳資料。');
