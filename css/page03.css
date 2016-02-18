@@ -1,0 +1,28 @@
+
+
+/* command list */
+    /* modify */
+        #receipt-image {
+            position: absolute;
+            display: none;
+            left: 0;
+            padding: 5px;
+            background: #ccc;
+        }
+        #receipt-wrapper:hover #receipt-image { display: block; ]}
+
+
+/* reject list */
+    #command-search #date1,
+    #command-search #date2 { width: 100px; }
+    #checkRadar,
+    #cancelRadar {
+        margin-right: 4px;
+    }
+
+    
+/* grant */
+    #grant-list a.link-option {
+        display: block;
+        cursor: pointer;
+    }

@@ -1,0 +1,32 @@
+
+#demo-modal .modal-body {
+    position: relative;
+    background: #ccc;
+    padding: 0;
+}
+
+#my-friends {
+    position: relative;
+    width: 100%;
+    height: 800px;
+    border: 0px solid #fff;
+}
+
+
+/* organize-modify */
+    .tab-content { margin-top: 20px; }
+    .store-image {
+        width: 360px;
+        height: 240px;
+        padding: 5px;
+        background: #ccc;
+    }
+    #map-panel {
+        width: 95%;
+        height: 250px;
+        border: 1px solid #aaa;
+    }
+    trix-editor {
+        height: 250px;
+        overflow: auto;
+    }

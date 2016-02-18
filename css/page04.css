@@ -1,0 +1,26 @@
+
+/* modify */
+    .cursor-point,
+    .cursor-point input {
+        cursor: pointer;
+
+    }
+
+    /* app */
+        #image-wrapper { position: relative; }
+        #image-wrapper a#image-link {color: blue; }
+        #image-wrapper img {
+            width: 120px;
+            left: 75px;
+            top: 0;
+            position: absolute;
+            z-index: 1000;
+            display: none;
+        }
+        #image-link:hover img { display: block; }
+
+        /* modify */
+            trix-editor {
+                height: 250px;
+                overflow: auto;
+            }

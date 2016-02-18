@@ -1,0 +1,85 @@
+/* inventory list */
+    #inventory-list .color-red { color: red; }
+    
+
+
+/* product list */
+    #product-list div > a.selling {color: blue; }
+    #product-list div > a.unselling {color: red; }
+    #product-list div > a.main {color: blue; }
+    #product-list div > a.not-main {color: darkorange; }
+    #product-list div.options > a {
+        margin: 0 2px;
+    }
+
+/* product modify */
+    #youtube-iframe {
+        border: 1px solid #ccc;
+        height: 280px;
+        width: 100%;
+    }
+    #product-modify-panel .tab-content { margin-top: 20px; }
+    #product-modify-panel textarea.form-control {
+        height: 100px;
+        resize: vertical; 
+    }
+
+    #product-modify-panel fieldset legend {
+        margin: 0;
+        margin-bottom: 5px;
+    }
+
+    #product-modify-panel .remove-image {
+        margin-left: 640px;
+    }
+    trix-editor {
+        height: 125px;
+        overflow: auto;
+    }
+    .image-list {display: inline-block; width: 100%; }
+    .image-list .image-item {
+        position: relative;
+        background: #eee;
+        float: left;
+        width: 280px;
+        margin-left: 5px;
+    }
+    .image-list .image-item input { width: 260px; display: none;}
+    .image-list .image-item img{
+        vertical-align: top;
+        background: #aaa;
+        display: block;
+        padding: 5px;
+        margin: 0 auto;
+        width: 240px;
+        height: 160px;
+        /*max-width: 240px;*/
+        /*max-height: 160px;*/
+        cursor: pointer;
+        transition: .15s;
+    }
+    .image-list .image-item .remove-active-background {
+        position: absolute;
+        background-color: rgba(0, 0, 0, .6);
+        text-align: center;
+        cursor: pointer;
+        display: none;
+        width: 280px;
+        height: 160px;
+        left: 0;
+        top: 0;
+    }
+    .image-list .image-item .remove-active-background span {
+        font-size: 84px;
+        line-height: 160px;
+        color: #888;
+    }
+    .image-list .image-item[image-id="0"] img { cursor: default; }
+    .image-list .image-item[image-id="0"] input { display: inline-block; }
+    .image-list .image-item.remove-active img { 
+        padding: 15px;
+    }
+    .image-list .image-item.remove-active .remove-active-background {
+        display: block;
+    }
+

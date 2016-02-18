@@ -1,0 +1,159 @@
+/* breadcrucmb (修正 IE8 的錯誤) */
+    .breadcrumb li { display: inline; }
+
+/* common */
+    .delete-link { color: #f66; cursor: pointer;}
+    .delete-link:hover { color: red; }
+
+  
+/* index.tpl */
+    html {height: 100%; }
+    body#root-page iframe {width: 100%; }
+    body#root-page { 
+        position: relative;;
+        margin: 0px;
+        height: 100%;
+        min-width: 1440px;
+        overflow-y: hidden;
+    }
+    body#root-page iframe#header { transition: .15s; }
+    body#root-page iframe#main { height: 100%; }
+    body#root-page iframe#header {
+        height: 0; 
+        overflow: hidden;
+        margin-bottom: 10px;
+        -webkit-box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.75);
+           -moz-box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.75);
+                box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.75);
+    }
+
+/* header */
+    body#header { overflow: hidden; }
+    body#header .container {
+        position: relative;
+        width: 1200px;
+    }
+    body#header .list-group-item { 
+        font-family: '微軟正黑體'; 
+        font-weight: bold; 
+        position: relative;
+    }
+    /*    
+    body#header .list-group-item:after {
+        position: absolute;
+        height: 3px;
+        width: 100%;
+        bottom: 8px;
+        left: 0;
+        content: ' ';
+        background: red;
+        opacity: 0;
+        transition: .15s;
+    }
+    body#header .list-group-item:hover:after { opacity: 1; }
+    */
+
+/* optionBar */
+    .option-button img { display: none; margin: 5px;}
+    .option-bar.ajax.ajax-save > .option-button.option-save > img{
+        display: inline-block;
+    }
+    #option-main {
+        border: 1px solid #ccc;
+        /*background: #eee;*/
+        border-radius: 3px;
+        /*padding: 10px 0px;*/
+        margin: 10px 0;
+        -webkit-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.4);
+           -moz-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.4);
+                box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.4);
+    }
+
+    /* sub page */
+        .sub-title-bar {
+            margin-top: 10px;
+        }
+        .sub-title-bar label{
+            border-left: 5px solid orange;
+            padding: 5px 10px;
+            background: #FFF1B8;
+            display: block;
+            vertical-align: middle;
+            margin-bottom: 20px;
+        }
+
+/* validate */
+    .required-field::before {
+        position: absolute;
+        margin-left: -15px;
+        margin-top: -5px;
+        content: '*';
+        color: red;
+        padding: 4px;
+    }
+    div.tooltip {
+        /*position: fixed;*/
+    }
+    .validate {
+        background: #FFEAEA;
+        border-color: #FFADAD;
+    }
+
+
+/* print */
+    body.print-page #print { position: fixed; top: 10px; left: 10px; opacity: .6;}
+    body.print-page #print:hover { opacity: 1;}
+    body.print-page { background: rgb(204,204,204); padding: 20px; }
+    body.print-page page[size="A4"] { width :21cm; min-height: 29.7cm}
+    body.print-page.landscape page[size="A4"] { width :29.7cm; min-height: 21cm;}
+    page[size="A4"] {
+        position: relative;
+        background: white;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 0.5cm;
+        box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+        padding: 30px 30px 120px 30px;
+    }
+    page .footer {
+        position: absolute;
+        bottom: 20px;
+
+    }
+
+    .print-table {
+        border-collapse: collapse !important;
+        width: 100%;
+    }
+    .print-table th,
+    .print-table td {
+        font-size: 11px;
+        border: 1px solid #999;
+        padding: 0 5px;
+    }
+
+    .print-table-footer {
+        border-collapse: collapse !important;
+        width: 100%;
+    }
+    .print-table-footer th,
+    .print-table-footer td {
+        font-size: 18px;
+        border: 0px solid #999;
+        padding-right: 120px;
+        padding-bottom: 50px;
+    }
+
+    @media print {
+        #print { display: none; }
+        body.print-page, page[size="A4"] {
+            font-size: 13px;
+            margin: 0;
+            padding: 0 0 120px 0;
+            box-shadow: 0;
+            width: auto !important;
+            height: auto !important;
+            min-width: 0 !important;
+            min-height: 0 !important;
+        }
+    }

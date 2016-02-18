@@ -1,0 +1,37 @@
+/* main */
+    #welcome-panel {
+        position: relative;
+        margin: auto;
+    }
+
+    .update-log legend {
+        font-weight: bold;
+    }
+    .update-log .well h5 {
+        font-weight: bold;
+        line-height: 40px;
+    }
+    .update-log .well h5 .download {
+        margin-left: 20px;
+        position: relative;
+    }
+    .update-log .well h5 .download img{
+        display: none;
+        position: absolute;
+        left: 80px;
+        top: 0;
+        padding: 5px;
+        border: 5px solid #aaa;
+        background: #fff;
+    }
+    .update-log .well h5 .download:hover img{
+        display: block;
+    }
+    .update-log .well {
+        margin-left: 40px;
+    }
+    .update-log .well ol li {
+        margin-top: 5px;
+        font-size: 13px;
+        color: blue;
+    }

@@ -1,0 +1,27 @@
+        <ul class="list-group">
+            <a 
+            	class="list-group-item" 
+            	href="command_list.php?sid={{$smarty.get.sid}}" 
+            	target="ifr-right">訂貨單
+            </a>
+            <a 
+            	class="list-group-item" 
+            	href="order_reject_list.php?sid={{$smarty.get.sid}}" 
+            	target="ifr-right">退貨單
+            </a>
+            <a 
+            	class="list-group-item" 
+            	href="order_swap_list.php?sid={{$smarty.get.sid}}" 
+            	target="ifr-right">換貨單
+            </a>
+            <a 
+                class="list-group-item" 
+                href="order_status_list.php?sid={{$smarty.get.sid}}" 
+                target="ifr-right">出貨狀態查詢
+            </a>
+            <a 
+                class="list-group-item" 
+                href="sales_analysis.php?sid={{$smarty.get.sid}}" 
+                target="ifr-right">銷售分析表
+            </a>
+        </ul>

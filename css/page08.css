@@ -1,0 +1,11 @@
+
+#success {
+    margin: 10px 0;
+    height: 200px;
+    width: 500px;
+    overflow-y: scroll;
+}
+
+/* reject list */
+    #command-search #date1,
+    #command-search #date2 { width: 100px; }
