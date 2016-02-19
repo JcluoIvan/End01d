@@ -33,7 +33,7 @@ class c316 extends pub\GatewayApi{
             'group' => 'odm022'
         );
 
-        $order = Order::find('all', $options);\
+        $order = Order::find('all', $options);
 
         $count = count($order);
         if ($count == 0) return $this->fail('訂貨單目前尚無已核帳資料。');
