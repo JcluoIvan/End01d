@@ -95,6 +95,25 @@
         $getMethods = "宅配";
     }
 
+    switch ($orderData->odm018) {
+        case 'donate':
+            $invoice = '發票捐贈';
+            break;
+        case 'e-duplex':
+            $invoice = '二聯式電子';
+            break;
+        case 'p-duplex':
+            $invoice = '二聯式紙本';
+            break;
+        case 'triple':
+            $invoice = '三聯式紙本';
+            break;
+        
+        default:
+            $invoice = '';
+            break;
+    }
+
     $tpl->assign('orderData',$orderData);
     $tpl->assign('memberData',$memberData);
     $tpl->assign('list',$list);
@@ -108,6 +127,7 @@
     $tpl->assign('receivable',$receivable);
     $tpl->assign('getMethods',$getMethods);
     $tpl->assign('address',$address);
+    $tpl->assign('invoice',$invoice);
     $tpl->display('page08_order_modify.tpl');
 
 

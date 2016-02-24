@@ -47,6 +47,7 @@
             </div>
         </div>
 
+        <!--
         <div class="form-group">
             <label class="control-label col-xs-2" col-xs-offset-1> 收款日期 </label>
             <div class="col-xs-2">
@@ -57,7 +58,18 @@
             <div class="col-xs-2">
                 <input readonly class="form-control" name="signoff" type="text" id="signoff" value="{{$signoff}}" />
             </div>
-            <!-- <input class="form-control" name="info" type="hidden" id="info" value="現金: {{$sum}} + 運費: {{$orderData->odm029}} - 使用購物金: {{$orderData->odm004}} - 退貨金: {{$orderData->odm032}} = 總金額: {{$correct_sum}} ，本次新增購物金: {{$shoppinggold}}" /> -->
+            <input class="form-control" name="oid" type="hidden" id="oid" value="{{$orderData->odm001}}" />
+        </div>
+        -->
+
+        <div class="form-group">
+            <label class="control-label col-xs-2"> 核帳日期 </label>
+            <div class="col-xs-2">
+                <input readonly class="form-control" name="signoff" type="text" id="signoff" value="{{$signoff}}" />
+            </div>
+            <!-- 
+            <input class="form-control" name="info" type="hidden" id="info" value="現金: {{$sum}} + 運費: {{$orderData->odm029}} - 使用購物金: {{$orderData->odm004}} - 退貨金: {{$orderData->odm032}} = 總金額: {{$correct_sum}} ，本次新增購物金: {{$shoppinggold}}" /> 
+            -->
             <input class="form-control" name="oid" type="hidden" id="oid" value="{{$orderData->odm001}}" />
         </div>
 

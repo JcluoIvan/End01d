@@ -34,11 +34,7 @@
                 <input type="text" name="getno" class="form-control" value="{{$getNo}}" />
             </div>
 
-            
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-xs-2 "> {{$get_Date}} </label>
+        <label class="control-label col-xs-2 "> {{$get_Date}} </label>
             <div class="col-xs-3">
                 <div class="input-group">
                     <input class="form-control" name="delivery" type="text" id="delivery" onpropertychange="zzday();" value="{{$delivery}}" />
@@ -50,7 +46,13 @@
                     </a>
                 </div>
             </div>
-            <!-- <label class="control-label col-xs-2" > 收款日期 </label>
+
+            
+        </div>
+
+        <!-- 
+        <div class="form-group">
+            <label class="control-label col-xs-2" > 收款日期 </label>
             <div class="col-xs-3">
                 <div class="input-group">
                     <input class="form-control" name="receivable" type="text" id="receivable" onpropertychange="zzday();" value="{{$receivable}}" />
@@ -61,9 +63,28 @@
                         <span class="glyphicon glyphicon-remove" title="移除" aria-hidden="true"></span>
                     </a>
                 </div>
-            </div> -->
+            </div>
 
             <label class="control-label col-xs-1" col-xs-offset-1> 核帳日期 </label>
+            <div class="col-xs-3">
+                <div class="input-group">
+                    <input class="form-control" name="signoff" type="text" id="signoff" onpropertychange="zzday();" value="{{$signoff}}" />
+                    <a id="signoff.onclick" class="input-group-addon btn bt-default" href="#">
+                        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                    </a>
+                    <a id="signoff.clear" class="input-group-addon btn bt-default clear-date" href="#" clear-target="input#signoff">
+                        <span class="glyphicon glyphicon-remove" title="移除" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </div>
+            <input class="form-control" name="info" type="hidden" id="info" value="現金: {{$sum}} + 運費: {{$orderData->odm029}} - 使用購物金: {{$orderData->odm004}} - 退貨金: {{$orderData->odm032}} = 總金額: {{$correct_sum}} ，本次新增購物金: {{$shoppinggold}}" />
+            <input class="form-control" name="oid" type="hidden" id="oid" value="{{$orderData->odm001}}" />
+        </div> 
+        -->
+
+        <div class="form-group">
+
+            <label class="control-label col-xs-2" col-xs-offset-2> 核帳日期 </label>
             <div class="col-xs-3">
                 <div class="input-group">
                     <input class="form-control" name="signoff" type="text" id="signoff" onpropertychange="zzday();" value="{{$signoff}}" />
