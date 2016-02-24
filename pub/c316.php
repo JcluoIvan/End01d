@@ -30,11 +30,13 @@ class c316 extends pub\GatewayApi{
                 $date1,
                 $date2
             ),
-            'group' => 'odm022'
+            // 'group' => 'odm022'
         );
 
         $order = Order::find('all', $options);
-
+        // $sql = Order::connection()->last_query;
+        // print_r($sql);
+        
         $count = count($order);
         if ($count == 0) return $this->fail('訂貨單目前尚無已核帳資料。');
         if($count > 0){
@@ -62,8 +64,8 @@ class c316 extends pub\GatewayApi{
             $saveOrder->odm035 = $openaccount;
             $saveOrder->save();
 
-            // $RadarStatement = RadarStatement::find('first', array('conditions' => array( 'rat002 = ?', $tmp['lv2id']))) ?: new RadarStatement;
-            $RadarStatement = new RadarStatement;
+            $RadarStatement = RadarStatement::find('first', array('conditions' => array( 'rat002 = ? and rat003 = ?', $tmp['lv2id'], $tmp['total']))) ?: new RadarStatement;
+            // $RadarStatement = new RadarStatement;
             $RadarStatement->rat002 = $tmp['lv2id'] ?: 0;                   //雷達站編號
             $RadarStatement->rat003 = $tmp['total'] ?: 0;                   //實收金額
             $RadarStatement->rat004 = date("Y-m-d H:i:s") ?: null;          //核帳日期

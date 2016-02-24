@@ -39,7 +39,7 @@ class c326 extends pub\GatewayApi{
                     $saveOrder->odm035 = $openaccount;
                     $saveOrder->save();
 
-                    $RadarStatement = RadarStatement::find('first', array('conditions' => array( 'rat003 = ?', $tmp['total']))) ?: new RadarStatement;
+                    $RadarStatement = RadarStatement::find('first', array('conditions' => array( 'rat003 = ?', $tmp['money']))) ?: new RadarStatement;
                     $result = $RadarStatement->delete();
 
                 }
