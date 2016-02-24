@@ -113,6 +113,25 @@
         $get_Date = "出貨日期";
     }
 
+    switch ($orderData->odm018) {
+        case 'donate':
+            $invoice = '發票捐贈';
+            break;
+        case 'e-duplex':
+            $invoice = '二聯式電子';
+            break;
+        case 'p-duplex':
+            $invoice = '二聯式紙本';
+            break;
+        case 'triple':
+            $invoice = '三聯式紙本';
+            break;
+        
+        default:
+            $invoice = '';
+            break;
+    }
+
     $tpl->assign('get_No',$get_No);
     $tpl->assign('get_Date',$get_Date);
     $tpl->assign('photo',$photo);
@@ -129,6 +148,7 @@
     $tpl->assign('receivable',$receivable);
     $tpl->assign('getMethods',$getMethods);
     $tpl->assign('address',$address);
+    $tpl->assign('invoice',$invoice);
     $tpl->display('page03_order_modify.tpl');
 
 

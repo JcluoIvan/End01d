@@ -36,6 +36,11 @@
         </div>
 
         <div class="form-group">
+            <label class="control-label col-xs-2"> 發票類型 </label>
+            <div class="col-xs-2">
+                <input readonly type="text" class="form-control" value="{{$invoice}}" />
+            </div>
+
             <label class="control-label col-xs-2"> 統一編號 </label>
             <div class="col-xs-2">
                 <input readonly type="text" class="form-control" value="{{$orderData->odm019}}" />

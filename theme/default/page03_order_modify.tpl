@@ -34,6 +34,10 @@
                 <input type="text" name="getno" class="form-control" value="{{$getNo}}" />
             </div>
 
+            
+        </div>
+
+        <div class="form-group">
             <label class="control-label col-xs-2 "> {{$get_Date}} </label>
             <div class="col-xs-3">
                 <div class="input-group">
@@ -46,10 +50,7 @@
                     </a>
                 </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-xs-2" > 收款日期 </label>
+            <!-- <label class="control-label col-xs-2" > 收款日期 </label>
             <div class="col-xs-3">
                 <div class="input-group">
                     <input class="form-control" name="receivable" type="text" id="receivable" onpropertychange="zzday();" value="{{$receivable}}" />
@@ -60,7 +61,7 @@
                         <span class="glyphicon glyphicon-remove" title="移除" aria-hidden="true"></span>
                     </a>
                 </div>
-            </div>
+            </div> -->
 
             <label class="control-label col-xs-1" col-xs-offset-1> 核帳日期 </label>
             <div class="col-xs-3">
@@ -86,6 +87,11 @@
         </div>
 
         <div class="form-group">
+            <label class="control-label col-xs-2"> 發票類型 </label>
+            <div class="col-xs-2">
+                <input readonly type="text" class="form-control" value="{{$invoice}}" />
+            </div>
+
             <label class="control-label col-xs-2"> 統一編號 </label>
             <div class="col-xs-2">
                 <input readonly type="text" class="form-control" value="{{$orderData->odm019}}" />
