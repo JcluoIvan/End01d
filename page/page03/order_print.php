@@ -4,7 +4,6 @@ include '../../conf/config.php';
 use model\Agent;
 use model\Order;
 
-
 $no = $_GET['no'] ?: null;
 $date1 = $_GET['date1'] ?: null;
 $date2 = $_GET['date2'] ?: null;
@@ -39,6 +38,8 @@ $rows = Order::with(
         array('al','ar')
     );
 
+$get_No = '';
+$get_Date = '';
 foreach ($rows as $key => $row) {
     $rows[$key] = $row->attributes(true);
 
