@@ -56,7 +56,7 @@ class c266 extends \pub\GatewayApi{
                     FROM ( 
                         SELECT pdp002 
                         FROM product_purchase 
-                        WHERE pdp002 > :def AND pdp003 > 0
+                        WHERE SUBSTR(pdp002, 1, 7) = :def AND pdp003 > 0
                     ) AS tab";
         $sql = "INSERT INTO product_purchase (pdp002, pdp003, pdp005)
                 VALUES (
@@ -66,7 +66,7 @@ class c266 extends \pub\GatewayApi{
                 )";
         $data = array(
             ':code' => $affix,
-            ':def' => "{$affix}0000",
+            ':def' => "{$affix}",
             ':aid' => intval(Input::post('aid')),
             ':editor' => User::get('id')
         );

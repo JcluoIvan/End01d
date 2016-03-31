@@ -18,7 +18,7 @@ class w207 {
 
         $columns = array('id', 'no', 'name');
         foreach ($result as $row) {
-            $data = $row->attributes(array('id', 'name'));
+            $data = $row->attributes(array('id', 'name', 'qrcodeId'));
             $data['name'] = mb_substr($data['name'], 0, 1) . '會員';
             $data['children'] = array();
             $map[$row->mem001] = $data;

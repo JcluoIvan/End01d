@@ -49,14 +49,13 @@ class c216 extends \pub\GatewayApi{
 
         $affix = self::NO_AFFIX . date('ymd');
 
-        $len = strlen($affix) + 1;
-
+        $len = strlen($affix) + 2;
         /* 取得今日的 max 編號 */
         $sql_max = "SELECT IFNULL(SUBSTR(MAX(pdp002), {$len}), 0) + 1
                     FROM ( 
                         SELECT pdp002 
                         FROM product_purchase 
-                        WHERE pdp002 > :def AND pdp003 > 0
+                        WHERE SUBSTR(pdp002, 1, 7) = :def AND pdp003 > 0
                     ) AS tab";
         $sql = "INSERT INTO product_purchase (pdp002, pdp003, pdp005)
                 VALUES (
@@ -66,7 +65,7 @@ class c216 extends \pub\GatewayApi{
                 )";
         $data = array(
             ':code' => $affix,
-            ':def' => "{$affix}0000",
+            ':def' => "{$affix}",
             ':aid' => intval(Input::post('aid')),
             ':editor' => User::get('id')
         );
