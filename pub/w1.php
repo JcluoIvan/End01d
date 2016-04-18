@@ -19,12 +19,11 @@ class w1 extends pub\GatewayApi{
         
         /* register id */
         $app->ari004 = Input::post('rid');
-
         if (Input::post('unregister')) {
-            $sql = "DELETE FROM `app_register_id` WHERE ari001 = ? AND ari003 = ?";
-            $values = array(Input::post('mid'), Input::post('uuid'));
+            $sql = "DELETE FROM `app_register_id` WHERE ari003 = ?";
+            $values = array(Input::post('uuid'));
             AppRegister::connection()->query($sql, $values);
-            return $this->success();
+            return $this->success(array('mid' => Input::post('mid'), 'uuid'=> Input::post('uuid')));
         }        
 
         $result = $remove ? $app->unregisterDevice() : $app->registerDevice();
