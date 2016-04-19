@@ -18,6 +18,8 @@
           </tr>
           <tr>
             <td colspan="3">送貨地址： {{$orderData['address']}}</td>
+            <td>&nbsp;</td>
+            <td colspan="3">現金: {{$pmoney}} + 運費: {{$shipment}} - 使用購物金: {{$use_shoppinggold}} - 退貨金: {{$rmoney}} = 總金額: {{$correct_sum}} ，本次新增購物金: {{$shoppinggold}}</td>
           </tr>
         </table>
         <table class="print-table">

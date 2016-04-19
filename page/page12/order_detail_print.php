@@ -112,6 +112,27 @@ foreach ($rows as $key => $row) {
         $get_Date = '出貨日期';
     }
 
+    //本次使用的購物金
+    $use_shoppinggold = $rows[$key]['coupon'] > 0 ? $rows[$key]['coupon'] : 0;
+
+    // 運費
+    $shipment = $rows[$key]['fare'] > 0 ? $rows[$key]['fare'] : 0;
+
+    // 此次購買總額(含運費)
+    $pmoney_total = $rows[$key]['total'] > 0? $rows[$key]['total'] : 0;
+
+    // 此次購買總額(不含運費)
+    $pmoney = $pmoney_total - $shipment;
+
+    //退貨金
+    $rmoney = $rows[$key]['reject_shopgold'] > 0 ? $rows[$key]['reject_shopgold'] : 0;
+
+    //實際金額
+    $correct_sum = $pmoney - $use_shoppinggold + $shipment - $rmoney;
+
+    //本次訂單新增的購物金
+    $shoppinggold = floor($correct_sum*20/100); 
+    
     $rows[$key]['check_date'] = $rows[$key]['check_date'] ? date('Y/m/d', strtotime($rows[$key]['check_date'])) : '';
     $rows[$key]['date2'] = $rows[$key]['date2'] ? date('Y/m/d', strtotime($rows[$key]['date2'])) : '';
     $rows[$key]['date3'] = $rows[$key]['date3'] ? date('Y/m/d', strtotime($rows[$key]['date3'])) : '';
@@ -125,5 +146,14 @@ $tpl->assign('rows', $rows);
 $tpl->assign('memberData', $member);
 $tpl->assign('orderData', $orderData);
 $tpl->assign('detail', $rows2);
+
+
+$tpl->assign('pmoney', $pmoney);
+$tpl->assign('rmoney', $use_shoppinggold);
+$tpl->assign('use_shoppinggold', $use_shoppinggold);
+$tpl->assign('shipment', $shipment);
+$tpl->assign('rmoney', $rmoney);
+$tpl->assign('correct_sum', $correct_sum);
+$tpl->assign('shoppinggold', $shoppinggold);
+
 $tpl->display('page12_order_detail_print.tpl');
-?>

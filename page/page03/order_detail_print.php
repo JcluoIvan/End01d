@@ -157,4 +157,3 @@ $tpl->assign('correct_sum', $correct_sum);
 $tpl->assign('shoppinggold', $shoppinggold);
 
 $tpl->display('page03_order_detail_print.tpl');
-?>
