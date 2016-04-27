@@ -6,7 +6,6 @@ class c361 extends pub\GatewayApi {
 
     public function run() 
     {
-        
         $rows = Order::with(
             Order::all($this->options()),
             array('member')
@@ -22,7 +21,8 @@ class c361 extends pub\GatewayApi {
             $point = $row->getMemberPoint();
             $row->recalculateMemberPoint();
             $member_name = $row->member ? $row->member->mem005 : '下層會員';
-            $message = "{$member_name} 購物本公司產品，您將獲得購物金 {$point}。";
+            $fname = mb_substr($member_name, 0, 1, 'utf8');
+            $message = "會員 {$fname}(先生/小姐) 購物本公司產品，您將獲得購物金 {$point}。";
             $members = array(
                 $row->odm013,
                 $row->odm023,

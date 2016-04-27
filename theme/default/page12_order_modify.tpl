@@ -1,9 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    {{include "head.tpl"}}
-</head>
-<body>
+
 
 <div class="col-xs-12">
     <h3 class="sub-title-bar"> 
@@ -157,9 +152,3 @@
     </form>
     <iframe id="iframe-save" name="iframe-save" style='display:none;'></iframe>
 </div>
-
-
-
-</body>
-</html>
-

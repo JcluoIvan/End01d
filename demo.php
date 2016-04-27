@@ -1,11 +1,14 @@
 <?php
-include 'conf/config.php';
 
-use model\AppRegister;
+include 'conf/config.php';
+include 'pub/c361.php';
+
+$cmd = new c361;
+$cmd->run();
 
 // AppRegister::pushNotification('推播 Test ~~ ', array(2));
 
-
+return;
 echo '<pre>';
 // exit;
 $message = '推播 Test ~~ 收到請聯絡 Ivan 我。';
