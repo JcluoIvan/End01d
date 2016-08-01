@@ -11,7 +11,7 @@ use model\OrderDetailCache;
 use model\Setting;
 // use model\AppRegister;
 /* 取得下單資料(下訂單前的動作 ) */
-/* order->save() 參考 c306.php or c307.php */ 
+/* order->save() 參考 c306.php or c307.php */
 
 class w105 extends pub\GatewayApi{
 
@@ -68,7 +68,7 @@ class w105 extends pub\GatewayApi{
                 $detail->odd004 = $row->pdm006;
                 $detail->odd006 = $buy[$row->pdm001];
                 $detail->save();
-            } 
+            }
 
             if (! $is_card) {
                 $order->sendMail();
@@ -95,7 +95,7 @@ class w105 extends pub\GatewayApi{
         }
     }
 
-    public function inventory($buy, $member) 
+    public function inventory($buy, $member)
     {
 
         $products = array_keys($buy);
@@ -129,7 +129,7 @@ class w105 extends pub\GatewayApi{
             if (! isset($product[$pid])) {
                 throw new Exception("查無此產品 ({$pid}).");
             }
-            $value = $product[$pid]->inventory 
+            $value = $product[$pid]->inventory
                 ? $product[$pid]->inventory->pin004 : 0;
             $name = $product[$pid]->pdm004;
             if ($product[$pid]->pdm007 == 0) {
@@ -142,7 +142,7 @@ class w105 extends pub\GatewayApi{
         return $lack;
     }
 
-    public function setOrderData($order, $member, $buy, $products) 
+    public function setOrderData($order, $member, $buy, $products)
     {
 
         /* to_csv.到店取貨, to_house 送貨到府 */
@@ -184,8 +184,9 @@ class w105 extends pub\GatewayApi{
         /* 實際應收金額, (不含運費) (計算除了點數商品, 現金抵用購物金後的應付金額) */
         $real_total = $real_total - $point;
 
-        /* 計算運費 (宅配 & 實際金額低於 5000 才需要運費) */
-        $fare = ($type === 'to_house' && $real_total < 5000) ? Setting::value('Fare') : 0;
+        /* 計算運費 (宅配 & 實際金額低於 {設定值} 才需要運費) */
+        $fare = ($type === 'to_house' && $real_total < Setting::value('FareLowerLimit')) ?
+            Setting::value('Fare') : 0;
 
         /* 總金額再加上運費 */
         // if ($order === false) $this->fail('購買失敗');

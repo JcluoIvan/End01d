@@ -1,10 +1,11 @@
 <?php
 use model\Member;
+use model\Setting;
 
 /* membe 登入 */
 class w0 extends pub\GatewayApi{
 
-    public function run() 
+    public function run()
     {
         $sid = Input::post('sid');
         $phone = Input::post('phone');
@@ -21,10 +22,11 @@ class w0 extends pub\GatewayApi{
         if ($result) {
 
             $member = Member::find_by_mem001(User::get('id'));
-            
+
             return array(
                 'status' => true,
                 'user' => $member->loginMemberData(),
+                'fare_lower_limit' => intval(Setting::value('FareLowerLimit')),
                 // 'lang' => Lang::get(),
             );
         }

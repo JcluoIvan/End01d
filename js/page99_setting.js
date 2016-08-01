@@ -132,7 +132,7 @@
                 align: 'left'
             }, {
                 display: '狀態',
-                name: 'value', 
+                name: 'value',
                 width: 320,
                 align: 'center',
                 process: function(div, id) {
@@ -142,7 +142,7 @@
                         /* 簡訊通知, App通知 */
                         case 'GrantNoticeBySMS':
                         case 'GrantNoticeByApp':
-                            data.value = Number(data.value);                            
+                            data.value = Number(data.value);
                             $link
                                 .html(data.value ? '啟用中' : '停用中')
                                 .toggleClass('disabled', data.value === 0)
@@ -154,7 +154,8 @@
                             break;
 
                         /* 運費 */
-                        case 'Fare':    
+                        case 'Fare':
+                        case 'FareLowerLimit':
                             $link
                                 .html(data.value)
                                 .bind('click', app.changeSettingNumber)
@@ -223,7 +224,7 @@
 
     });
 
-    
+
 
 
     app.init();

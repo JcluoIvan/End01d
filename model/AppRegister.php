@@ -16,6 +16,8 @@ class AppRegister extends BaseModel
 
     static $rp = 1000;
 
+    static $tt = 0;
+
     public function registerDevice() 
     {
         $data = array(
@@ -71,6 +73,7 @@ class AppRegister extends BaseModel
 
         $count = static::count(static::options(true, $users));
         $max = ceil($count / static::$rp);
+        $old = null;
         for ($page = 0; $page < $max; $page++) {
             $rows = static::find('all', static::options(true, $users, $page));
             $rids = array();
@@ -79,6 +82,7 @@ class AppRegister extends BaseModel
             }
             $response = static::pushIOS($message, $rids);
         }
+
 
     }
     /**
@@ -133,7 +137,6 @@ class AppRegister extends BaseModel
         $output = json_encode($payload);
         
         $payload_length = strlen($output);
-
         $pem = System::get('ios.push.pem');
         $pwd = System::get('ios.push.passphrase');
         $stream = stream_context_create();
@@ -159,11 +162,18 @@ class AppRegister extends BaseModel
                 pack('n', $payload_length) .
                 $output;
             fwrite($apns, $message);
+            // if (checkAppleErrorResponse($apns)) {
+            //     // fclose($apns);
+            //     // static::connection()->query("DELETE FROM app_register_id WHERE ari004 = '{$rid}'");
+            //     return false;
+            // }
         }
-        if ($error || $errorString) {
-            // var_dump($result, $error, $errorString);
-            return false;
-        }
+
+        // if ($error || $errorString) {
+        //     fclose($apns);
+        //     // var_dump($result, $error, $errorString);
+        //     return false;
+        // }
         fclose($apns);
         return true;
 
@@ -198,6 +208,48 @@ class AppRegister extends BaseModel
         return $options;
     }
 
+    //FUNCTION to check if there is an error response from Apple
+    //         Returns TRUE if there was and FALSE if there was not
+    protected static function checkAppleErrorResponse($fp) {
+
+        //byte1=always 8, byte2=StatusCode, bytes3,4,5,6=identifier(rowID). Should return nothing if OK.
+        $apple_error_response = fread($fp, 6);
+        //NOTE: Make sure you set stream_set_blocking($fp, 0) or else fread will pause your script and wait forever when there is no response to be sent.
+
+        if ($apple_error_response) {
+            //unpack the error response (first byte 'command" should always be 8)
+            $error_response = unpack('Ccommand/Cstatus_code/Nidentifier', $apple_error_response);
+
+            if ($error_response['status_code'] == '0') {
+                $error_response['status_code'] = '0-No errors encountered';
+            } else if ($error_response['status_code'] == '1') {
+                $error_response['status_code'] = '1-Processing error';
+            } else if ($error_response['status_code'] == '2') {
+                $error_response['status_code'] = '2-Missing device token';
+            } else if ($error_response['status_code'] == '3') {
+                $error_response['status_code'] = '3-Missing topic';
+            } else if ($error_response['status_code'] == '4') {
+                $error_response['status_code'] = '4-Missing payload';
+            } else if ($error_response['status_code'] == '5') {
+                $error_response['status_code'] = '5-Invalid token size';
+            } else if ($error_response['status_code'] == '6') {
+                $error_response['status_code'] = '6-Invalid topic size';
+            } else if ($error_response['status_code'] == '7') {
+                $error_response['status_code'] = '7-Invalid payload size';
+            } else if ($error_response['status_code'] == '8') {
+                $error_response['status_code'] = '8-Invalid token';
+            } else if ($error_response['status_code'] == '255') {
+                $error_response['status_code'] = '255-None (unknown)';
+            } else {
+                $error_response['status_code'] = $error_response['status_code'] . '-Not listed';
+            }
+
+            // echo '<br><b>+ + + + + + ERROR</b> Response Command:<b>' . $error_response['command'] . '</b>&nbsp;&nbsp;&nbsp;Identifier:<b>' . $error_response['identifier'] . '</b>&nbsp;&nbsp;&nbsp;Status:<b>' . $error_response['status_code'] . '</b><br>';
+            // echo 'Identifier is the rowID (index) in the database that caused the problem, and Apple will disconnect you from server. To continue sending Push Notifications, just start at the next rowID after this Identifier.<br>';
+            return true;
+        }
+        return false;
+    }
 
 
 }
