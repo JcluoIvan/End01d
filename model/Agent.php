@@ -51,17 +51,17 @@ class Agent extends BaseModel
         'age024' => 'is_public',
         'age025' => 'is_locked',
     );
-    /* 主管 */ 
+    /* 主管 */
     const TYPE_S = 'S';
-    /* 會計 */ 
+    /* 會計 */
     const TYPE_A = 'A';
-    /* 廠務部 */ 
+    /* 廠務部 */
     const TYPE_P = 'P';
-    /* 客服 */ 
+    /* 客服 */
     const TYPE_C = 'C';
-    /* 指揮站 */ 
+    /* 指揮站 */
     const TYPE_L = 'L';
-    /* 雷達站 */ 
+    /* 雷達站 */
     const TYPE_R = 'R';
 
 
@@ -81,17 +81,17 @@ class Agent extends BaseModel
         /* 指揮站 */
         self::TYPE_L => array('page09', 'page98'),
         /* 雷達站 */
-        self::TYPE_R => array('page08', 'page98'),
+        self::TYPE_R => array('page13', 'page08', 'page98'),
     );
 
     static $departtypes = array(
-        self::TYPE_S => '主管', 
+        self::TYPE_S => '主管',
         self::TYPE_A => '會計部',
-        self::TYPE_P => '廠務部', 
+        self::TYPE_P => '廠務部',
         self::TYPE_C => '客服部'
     );
     static $agenttypes = array(
-        self::TYPE_L => '專業經理人', 
+        self::TYPE_L => '專業經理人',
         self::TYPE_R => '展示中心'
     );
 
@@ -152,7 +152,7 @@ class Agent extends BaseModel
             ));
             $count = intval(static::count($options));
         }
-        return $count === 0 
+        return $count === 0
             ? true
             : Lang::get('page01.validator.uniquePhone');
     }
@@ -171,7 +171,7 @@ class Agent extends BaseModel
             ? true
             : Lang::get('page01.validator.confirmPassword');
     }
-    public function afterSave() 
+    public function afterSave()
     {
         LogAgent::log($this);
         if (empty($this->age022)) $this->createQRCode();
@@ -184,26 +184,26 @@ class Agent extends BaseModel
      */
     public static function allowView($page) {
         $type = User::get('type') ?: null;
-        $allow = isset(static::$allow_page[$type]) 
-            ? static::$allow_page[$type] 
+        $allow = isset(static::$allow_page[$type])
+            ? static::$allow_page[$type]
             : array();
         return User::isLogin() && ($allow === true || in_array($page, $allow));
     }
     /**
      * 取得登入的使用者能瀏覽的頁面
-     * @return [array|boolean]  
-     *         回傳 
+     * @return [array|boolean]
+     *         回傳
      *             array 例: [page01, page05, page06]
-     *             true (代表所有頁面都有權限) 
+     *             true (代表所有頁面都有權限)
      *             false (代表所有頁面都無權限)
      */
     public static function allowPages() {
         $type = User::get('type') ?: null;
-        return isset(static::$allow_page[$type]) 
+        return isset(static::$allow_page[$type])
             ? static::$allow_page[$type] : false;
     }
 
-    public static function getCorrespondTypes($key = null) 
+    public static function getCorrespondTypes($key = null)
     {
 
         if (isset(static::$departtypes[$key])) {
@@ -216,7 +216,7 @@ class Agent extends BaseModel
         return $type;
     }
 
-    public static function getTypes($key = null) 
+    public static function getTypes($key = null)
     {
 
         if ($key == 1) {
@@ -228,14 +228,14 @@ class Agent extends BaseModel
     }
 
 
-    public static function findUser($account) 
+    public static function findUser($account)
     {
 
         return Agent::find_by_age004($account) ?: null;
 
     }
 
-    public static function getInfoByNo($no) 
+    public static function getInfoByNo($no)
     {
         $option = array(
             'conditions' => "age003 = '{$no}'",
@@ -276,8 +276,8 @@ class Agent extends BaseModel
     /**
      * 取得未被停用的指揮站清單 (不建分頁, 並且回傳陣列)
      * @return array(
-     *             id <string> => no - name <string> 
-     *             ...... 
+     *             id <string> => no - name <string>
+     *             ......
      *         );
      */
     static function getLAgentList() {
@@ -289,7 +289,7 @@ class Agent extends BaseModel
                 'age016 AS disabled'
             )),
             'conditions' => array(
-                'age002 = ?', 
+                'age002 = ?',
                 'L'
             ),
             'order' => 'age003'
@@ -308,7 +308,7 @@ class Agent extends BaseModel
      * @param  [integer] $lid 指揮站 id
      * @return array(
      *             id <string> => no - name <string>
-     *             ...... 
+     *             ......
      *         );
      */
     static function getRAgentList($lid) {
@@ -320,7 +320,7 @@ class Agent extends BaseModel
                 'age016 AS disabled'
             )),
             'conditions' => array(
-                'age002 = ? AND age018 = ? ', 
+                'age002 = ? AND age018 = ? ',
                 'R',
                 $lid,
             ),
@@ -346,7 +346,7 @@ class Agent extends BaseModel
         return intval(Agent::count($options)) > 0;
     }
 
-    public static function getAgentData($aid) 
+    public static function getAgentData($aid)
     {
         $option = array(
             'conditions' => "age001 = '{$aid}'",

@@ -8,3 +8,7 @@
 /photo/receipt
 /photo/store
 /theme/default/templates_c
+
+.vscode
+*.zip
+*.pem

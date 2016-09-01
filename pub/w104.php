@@ -54,9 +54,13 @@ class w104 extends pub\GatewayApi{
 
         $columns = array('id', 'no');
         $real_point = 0;
+        $total = 0;
         foreach ($result as $row) {
-            $real_point += ($row->pdm019) 
-                ? ($row->pdm006 * $products[$row->pdm001]) 
+
+            $total += intval($row->pdm006) * intval($products[$row->pdm001]);
+
+            $real_point += ($row->pdm019)
+                ? ($row->pdm006 * $products[$row->pdm001])
                 : 0;
             $products[$row->pdm001] = $row->attributes($columns);
             $products[$row->pdm001]['money'] = $row->pdm006;
@@ -70,20 +74,21 @@ class w104 extends pub\GatewayApi{
         $store = $agent->age014;
         $agent = $agent->attributes($columns);
         $agent['name'] = $store;
-        
+
         $bank = array('code' => null, 'account' => null);
-        list($bank['code'], $bank['account']) = 
+        list($bank['code'], $bank['account']) =
             explode('*', Setting::value('BankAccount'));
 
         return array(
             'status' => true,
             'bank' => $bank,
             'point' => $member->mem021,
-            'fare' => Order::getFare(),   //運費
+            'fare' => ($total < Setting::value('FareLowerLimit') ? Order::getFare() : 0),   //運費
             'agent' => $agent, //雷達站資訊
             'products' => array_values($products),   //產品資訊
-            'real_point' => $real_point
+            'real_point' => $real_point,
+            'total' => $total,
         );
-    }    
+    }
 
 }

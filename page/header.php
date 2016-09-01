@@ -4,8 +4,9 @@
 
     $sid = User::sid() ?: 0;
     $rows = array(
-        array('page11'  , "/page/page11/main.php?sid={$sid}", '會員管理'),
-        array('page01'  , "/page/page01/main.php?sid={$sid}", '會員管理'),
+        array('page11'  , "/page/page11/main.php?sid={$sid}", '會員管理'),  /* 會計專屬 */
+        array('page13'  , "/page/page13/main.php?sid={$sid}", '會員管理'),  /* 展示中心專屬 */
+        array('page01'  , "/page/page01/main.php?sid={$sid}", '會員管理'),  /* 最高權限專屬 */
         array('page02'  , "/page/page02/main.php?sid={$sid}", '庫存管理'),
         array('page03'  , "/page/page03/main.php?sid={$sid}", '訂單管理'),
         array('page12'  , "/page/page12/main.php?sid={$sid}", '訂單管理'),
