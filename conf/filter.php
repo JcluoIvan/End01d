@@ -79,7 +79,7 @@
 
             if (! $is_login) {
                 return in_array($cmd, $allow);
-            } 
+            }
 
         }
         return true;
@@ -92,14 +92,14 @@
                 array(
                     'status' => false,
                     'logout' => true,
-                    'message' => 'Not allow.'
+                    'message' => 'Not allow. (您已被登出, 請重新登入)'
                 )
             ));
         } else {
             $tpl->display('not_allow.tpl');
             exit;
         }
-           
+
     }
 
 
@@ -133,7 +133,7 @@
     //         URI::segment(1) !== 'webhome.php' &&
     //         URI::segment(1) !== 'home' &&
     //         URI::segment(1) !== 'header.php' &&
-    //         (! Agent::allowView(URI::segment(1))) 
+    //         (! Agent::allowView(URI::segment(1)))
     //     )
     // ) {
     //     $msg = User::getFailMessage();
@@ -145,7 +145,7 @@
     //     case null:
     //     case 'index.php':
     //     case '/page/webhome.php':
-    //     case ($uri_path === '/pub/gateway.php') && 
+    //     case ($uri_path === '/pub/gateway.php') &&
     //         (
     //             ($cmd === 0) ||
     //             ($site === 1 && in_array($cmd, $app_allow_cmds))
