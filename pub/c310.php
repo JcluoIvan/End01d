@@ -12,10 +12,10 @@ class c310 {
         $params = array();
         $queryNo = '';
         if (strlen($no) > 0) {
-            $queryNo = 'AND (age003 = LIKE ? OR age004 LIKE ? OR age006 LIKE ?)';
-            $params[] = $no;
-            $params[] = $no;
-            $params[] = $no;
+            $queryNo = 'AND (age003 LIKE ? OR age004 LIKE ? OR age006 LIKE ?)';
+            $params[] = "%{$no}%";
+            $params[] = "%{$no}%";
+            $params[] = "%{$no}%";
         }
         $where = "WHERE age002 = 'R' {$queryNo}";
         $query = Agent::connection()->query("SELECT COUNT(1) AS nums FROM agent {$where}", $params);
