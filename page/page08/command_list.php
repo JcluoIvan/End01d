@@ -1,8 +1,42 @@
 <?php
 	include '../../conf/config.php';
 	use model\Agent;
-
     if(User::get('type') != 'R'){ exit(); }
+
+    $message = '';
+    $key = User::sid() . '-page08_command_list';
+    $tpl->assign('sid', User::sid());
+
+    # 若有傳入 password , 執行登入
+    $password = Input::post('password') ?: null;
+    if ($password) {
+        $agent = Agent::first(
+            array(
+                'conditions' => array('age001 = ? AND age026 = ?', User::get('id'), $password)
+            )
+        );
+        if ($agent) {
+            $_SESSION[$key] = true;
+        } else {
+            $message = '密碼不正確';
+        }
+    }
+    if (Input::get('logout')) {
+        $_SESSION[$key] = null;
+    }
+
+    # 檢查是否有登入成功
+    $allow = isset($_SESSION[$key]) ?
+        $_SESSION[$key] :
+        null;
+
+    # 若未登入, 轉至登入頁面
+    if (! $allow) {
+        $tpl->assign('message', $message);
+        $tpl->display('page08_command_list_login.tpl');
+        return;
+    }
+
 
     $account = User::get('account');
     $name = User::get('name');
@@ -43,7 +77,3 @@
     $tpl->assign('month',$month_arr);
     $tpl->assign('right_now_month',$right_now_month);
 	$tpl->display('page08_command_list.tpl');
-
-
-
-?>

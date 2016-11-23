@@ -45,6 +45,10 @@ class w105 extends pub\GatewayApi{
 
         $order = $this->setOrderData(new Order, $member, $buy, $products);
 
+        if ($order->odm009 === Order::PAY_TYPE_ATM) {
+            return $this->fail('很抱歉, 目前 ATM 付款暫時無法使用, 請改用其他付款方式。');
+        }
+
         /* 回傳為陣例 (代表有錯誤) */
         if (is_array($order)) return $order;
 

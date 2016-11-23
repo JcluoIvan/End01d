@@ -9,7 +9,17 @@ class c800 extends pub\GatewayApi{
 
     public function run() {
         $page = Input::post('page') ?: 1;
-        
+        $key = User::sid() . '-page08_command_list';
+
+        # 必需登入業務獎金頁面的密碼後, 才可查詢
+        if (empty($_SESSION[$key])) {
+            return array(
+                'page' => $page,
+                'rows' => array(),
+                'total' => 0,
+            );
+        }
+
         //登入的雷達站 ID
         $id = User::get('id');
         $bank_account = User::get('bank_account');
@@ -45,7 +55,7 @@ class c800 extends pub\GatewayApi{
             ),
             'group' => 'odm013, odm027',
             'offset' => ($page - 1) * $rp,
-            'limit' => $rp, 
+            'limit' => $rp,
         );
 
         $options_count = array(
@@ -86,7 +96,7 @@ class c800 extends pub\GatewayApi{
             'rows' => $rows,
             'total' => $count,
         );
-        
+
     }
 
     private function getOptions2(){
@@ -106,7 +116,7 @@ class c800 extends pub\GatewayApi{
                         $params[] = $id;
                     }else{
                         $where[] = 'mem017 = ? ';
-                        $params[] = $id;   
+                        $params[] = $id;
                     }
                     break;
                 case 'name':
@@ -116,23 +126,23 @@ class c800 extends pub\GatewayApi{
                         $params[] = $id;
                     }else{
                         $where[] = 'mem017 = ? ';
-                        $params[] = $id;  
+                        $params[] = $id;
                     }
                     break;
                 case 'phone':
-                    if($searchData){ 
+                    if($searchData){
                         $where[] = 'mem011 LIKE ? AND mem017 = ? ';
                         $params[] = "%".$searchData."%";
                         $params[] = $id;
                     }else{
                         $where[] = 'mem017 = ? ';
-                        $params[] = $id;  
-                    }   
+                        $params[] = $id;
+                    }
                     break;
                 default:
                     # code...
                     break;
-            } 
+            }
 
             $page = Input::post('page') ?: 1;
             $rp = Input::post('rp') ?: 10;
@@ -141,9 +151,9 @@ class c800 extends pub\GatewayApi{
 
             $options = array(
                 'offset' => ($page - 1) * $rp,
-                'limit' => $rp,   
+                'limit' => $rp,
             );
-            
+
             if ($where) {
                 array_unshift($params, implode(' AND ', $where));
                 $options['conditions'] = $params;
@@ -152,16 +162,16 @@ class c800 extends pub\GatewayApi{
             return $options;
     }
 
-    private function getOptions() 
+    private function getOptions()
     {
         // $shipment = Input::post('shipmentno');
-        
+
         $where = array();
         if($shipment > 0){
             if(Input::post('no')){
                 $where[] = 'odm002 LIKE ? or odm011 LIKE ?';
                 $params[] = "%".Input::post('no')."%";
-                $params[] = "%".Input::post('no')."%";    
+                $params[] = "%".Input::post('no')."%";
             }elseif(!Input::post('no') && Input::post('date1') && Input::post('date2')){
                 $where[] = "odm006 BETWEEN ? AND ?";
                 $params[] = Input::post('date1');
@@ -173,9 +183,9 @@ class c800 extends pub\GatewayApi{
 
                 $where[] = 'odm002 LIKE ? or odm011 LIKE ?';
                 $params[] = "%".Input::post('no')."%";
-                $params[] = "%".Input::post('no')."%"; 
+                $params[] = "%".Input::post('no')."%";
             }
-            
+
         }else{
             $search_date2 = Input::post('date2');
             $today = date("Y-m-d");
@@ -192,7 +202,7 @@ class c800 extends pub\GatewayApi{
                 $params[] = $date2;
 
                 $where[] = 'odm002 LIKE ?';
-                $params[] = "%".Input::post('no')."%"; 
+                $params[] = "%".Input::post('no')."%";
             //搜尋二：搜尋日期
             }elseif (!Input::post('no') && Input::post('date1') && Input::post('date2')) {
                 $where[] = "odm006 BETWEEN ? AND ?";
@@ -201,7 +211,7 @@ class c800 extends pub\GatewayApi{
             //搜尋二：搜尋訂單編號 + 日期
             }elseif (Input::post('no')) {
                 $where[] = 'odm002 LIKE ?';
-                $params[] = "%".Input::post('no')."%"; 
+                $params[] = "%".Input::post('no')."%";
             }
         }
 
@@ -218,9 +228,9 @@ class c800 extends pub\GatewayApi{
 
         $options = array(
             'offset' => ($page - 1) * $rp,
-            'limit' => $rp,   
+            'limit' => $rp,
         );
-        
+
         if ($where) {
             array_unshift($params, implode(' AND ', $where));
             $options['conditions'] = $params;

@@ -18,7 +18,6 @@
             return true;
         },
         gridReload: function(event) {
-            console.log('run');
             event && event.preventDefault();
             grid.flexReload();
         }
@@ -30,7 +29,6 @@
         formElement: '#option-form',
         height: 400,
         onModify: function() {
-            console.log(this);
             return $(this).attr('href') || Endold.linkTo('/page/page03/order_detail.php', {id: id});
         },
         onSave: function() {
@@ -70,7 +68,6 @@
                 });
         },
         onSaveRequest: function(r) {
-            console.log(r);
             ProductApp.gridReload();
         },
         // insert: {
@@ -86,39 +83,39 @@
         colModel: [
             {
                display: '會員編號',
-               name: 'no', 
-               width: 120, 
-               align: 'center', 
+               name: 'no',
+               width: 120,
+               align: 'center',
             }, {
-              
+
                display: '會員名稱',
-               name: 'name', 
-               width: 120, 
+               name: 'name',
+               width: 120,
                align: 'center'
             }, {
                display: '消費金額',
-               name: 'total2', 
-               width: 120, 
+               name: 'total2',
+               width: 120,
                align: 'center'
             }, {
                display: '退貨金額',
-               name: 'reject', 
-               width: 120, 
+               name: 'reject',
+               width: 120,
                align: 'center'
             }, {
                display: '回饋%數',
-               name: 'lv2percent', 
-               width: 60, 
+               name: 'lv2percent',
+               width: 60,
                align: 'center'
             }, {
                display: '獎金',
-               name: 'total3', 
-               width: 120, 
+               name: 'total3',
+               width: 120,
                align: 'center'
             }, {
                 display: ' ',
-                name: 'mid', 
-                width: 80, 
+                name: 'mid',
+                width: 80,
                 align: 'center',
                 process: function(div, sn) {
                     var checkMid = div.innerHTML;

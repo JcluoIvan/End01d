@@ -31,6 +31,7 @@
 				<h3 class="title-bar">
 						<!-- <div id="option-bar" class="pull-right"></div> -->
 						<label>展示中心專區 - 業務獎金查詢</label>
+            			<a class="btn btn-primary pull-right" href="?sid={{$sid}}&logout=true">登出目前頁面</a>
 				</h3>
 				<div class="col-xs-8">
 	                <fieldset>

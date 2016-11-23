@@ -80,7 +80,7 @@
                     </div>
                 </fieldset>
                 <fieldset>
-                    <legend>密碼修改</legend>
+                    <legend>會員密碼修改</legend>
                     <div class="form-group">
                         <label class="control-label col-xs-2">原密碼</label>
                         <div class="col-xs-3">
@@ -97,6 +97,27 @@
                         <label class="control-label col-xs-2">密碼確認</label>
                         <div class="col-xs-3">
                             <input type="password" class="form-control" name="confirm_password" />
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>業務獎金密碼</legend>
+                    <div class="form-group">
+                        <label class="control-label col-xs-2">原密碼</label>
+                        <div class="col-xs-3">
+                            <input type="password" class="form-control" name="m_source_password"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-2">新密碼</label>
+                        <div class="col-xs-3">
+                            <input type="password" class="form-control" name="m_new_password" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-2">密碼確認</label>
+                        <div class="col-xs-3">
+                            <input type="password" class="form-control" name="m_confirm_password" />
                         </div>
                     </div>
                 </fieldset>

@@ -5,9 +5,9 @@ use model\Member;
 use model\LogAgent;
 class c9800 extends pub\GatewayApi{
 
-    public function run() 
+    public function run()
     {
-    
+
         $id = User::get('id');
         $row = Agent::find_by_age001($id);
         if (empty($row)) return $this->fail('資料不正確');
@@ -15,6 +15,10 @@ class c9800 extends pub\GatewayApi{
         if (trim(Input::post('new_password'))) {
             $row->age005 = trim(Input::post('new_password'));
         }
+        if (trim(Input::post('m_new_password'))) {
+            $row->age026 = trim(Input::post('m_new_password'));
+        }
+
         $row->age009 = Input::post('city');
         $row->age010 = Input::post('address');
         $row->age011 = Input::post('bank_account');
@@ -30,11 +34,21 @@ class c9800 extends pub\GatewayApi{
             return (Input::post('new_password') !== Input::post('confirm_password'))
                 ? '兩次輸入的密碼不相同' : true;
         });
+        $row->addValidate('[name=m_source_password]', 'age026', function() use ($row) {
+            $data = $row->getUpdateAttribute();
+            return (isset($data['age026']) && ($data['age026'] != Input::post('m_source_password')))
+                ? '原密碼不正確' : true;
+        });
+        $row->addValidate('[name=m_confirm_password]', 'age026', function($value) use($row) {
+            return (Input::post('m_new_password') !== Input::post('m_confirm_password'))
+                ? '兩次輸入的密碼不相同' : true;
+        });
+
         return $row->save()
             ? $this->success('資料修改完成')
             : $this->fail('資料修改失敗');
 
     }
 
-   
+
 }
