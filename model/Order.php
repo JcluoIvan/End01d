@@ -33,6 +33,7 @@ class Order extends BaseModel
         'receipt' => array('Receipt', 'rec002', 'odm001', 'single'),
         'swapMore' => array('Swap', 'ods002', 'odm001'),
         'rejectMore' => array('Reject', 'odr002', 'odm001'),
+        'radar' => array('RadarStatement', 'rat006', 'odm001'),
     );
 
     const MODE_CSV = 'csv';
@@ -45,14 +46,14 @@ class Order extends BaseModel
 
     static $Types = array('未核帳', '已核帳');
     static $Methods = array(
-        self::PAY_TYPE_CARD => '信用卡', 
-        self::PAY_TYPE_ATM => 'ATM轉帳', 
+        self::PAY_TYPE_CARD => '信用卡',
+        self::PAY_TYPE_ATM => 'ATM轉帳',
         self::PAY_TYPE_CASH => '付現',
         self::PAY_TYPE_NONE => '無現金'
     );
     static $Modes = array( self::MODE_CSV =>'到店取貨', self::MODE_HOUSE => '宅配');
     static $receipt = array(
-        'donate' => '發票捐贈', 
+        'donate' => '發票捐贈',
         'e-duplex' => '二聯式電子發票',
         'p-duplex' => '二聯式紙本發票',
         'triple' => '三聯式發票',
@@ -143,10 +144,10 @@ class Order extends BaseModel
                 : true;
         }
         return true;
-        
+
     }
 
-    public function beforeSave() 
+    public function beforeSave()
     {
         if (empty($this->odm002)) {
             /* 建立序號單 */
@@ -166,7 +167,7 @@ class Order extends BaseModel
         if (empty($this->odm002)) return false;
     }
 
-    public function afterSave() 
+    public function afterSave()
     {
         /* 由於信用卡付款的資料存在 order_cache, 會繼承此 class , 所以要過濾掉此動作 */
         if (get_class($this) !== 'model\Order') return;
@@ -230,7 +231,7 @@ class Order extends BaseModel
 
         /* 新增的訂單, 要寄信通知 */
         $cmd = sprintf(
-            'php %s "%s" > /dev/null &', 
+            'php %s "%s" > /dev/null &',
             (ROOT_PATH . 'mail/send_mail.php'),
             $this->odm001
         );
@@ -264,11 +265,11 @@ class Order extends BaseModel
 
         // $sql  = "SELECT * FROM order_manager WHERE age016 = :lv";
         // $data = array(':lv' => $lv);
-        
+
         // return static::find_by_sql($sql,$data);
         return static::all();
     }
-    
+
     public static function getType($value) {
         return static::$Types[$value];
     }
@@ -288,15 +289,15 @@ class Order extends BaseModel
         return static::$Modes[$this->odm010];
 
     }
-    
-    public static function receiptName() 
+
+    public static function receiptName()
     {
         return static::$receipt[$this->odm018];
     }
 
     /**
      * 取得運費金額
-     * @return integer 回傳運費金額 
+     * @return integer 回傳運費金額
      */
     public static function getFare() {
         return Setting::value('Fare');
@@ -312,7 +313,7 @@ class Order extends BaseModel
         return static::find_by_odm002($oid) ?: new Order;
         // return static::find_by_sql($sql);
     }
-    
+
 
     public static function getOrderDetail($sn) {
         $sql = 'SELECT odd001 AS sn, '
@@ -350,21 +351,21 @@ class Order extends BaseModel
     public function getMemberPoint($not_check_finish = false) {
 
         if (! $not_check_finish && empty($this->odm031)) return 0;
-        return floor( 
+        return floor(
             max(($this->odm030 - $this->odm032), 0) * $this->odm028 / 100
         );
     }
 
     /**
-     * 計算受此交易影響的會員購物金 
+     * 計算受此交易影響的會員購物金
      * @return void
      */
-    public function recalculateMemberPoint() 
+    public function recalculateMemberPoint()
     {
 
         /* 取得此交易產生的購物金 */
         $point = $this->getMemberPoint();
-        
+
         /* 查詢對應此訂單的 member point record */
         $options = array(
             'conditions' => array(

@@ -36,7 +36,7 @@ class c316 extends pub\GatewayApi{
         $order = Order::find('all', $options);
         // $sql = Order::connection()->last_query;
         // print_r($sql);
-        
+
         $count = count($order);
         if ($count == 0) return $this->fail('訂貨單目前尚無已核帳資料。');
         if($count > 0){
@@ -51,41 +51,43 @@ class c316 extends pub\GatewayApi{
                 // if($tmp['total']!=$tmp['savemoney']){
                 //     return $this->fail('資料不正確，請重新整理。');
                 // }
-                    
-            $optionsSave = array(
-                // 'select' => 'odm022, odm029 AS fare, odm030 AS total',
-                'conditions' => array(
-                    'odm001 IN (?) ',
-                    $tmp['id'],
-                )
-            );
-            $openaccount = 1;
-            $saveOrder = Order::find('first', array('conditions' => array( 'odm001 = ?', $tmp['id']))) ?: new Order;
-            $saveOrder->odm035 = $openaccount;
-            $saveOrder->save();
 
-            $RadarStatement = RadarStatement::find('first', array('conditions' => array( 'rat002 = ? and rat003 = ?', $tmp['lv2id'], $tmp['total']))) ?: new RadarStatement;
-            // $RadarStatement = new RadarStatement;
-            $RadarStatement->rat002 = $tmp['lv2id'] ?: 0;                   //雷達站編號
-            $RadarStatement->rat003 = $tmp['total'] ?: 0;                   //實收金額
-            $RadarStatement->rat004 = date("Y-m-d H:i:s") ?: null;          //核帳日期
-            $RadarStatement->rat005 = $account ?: null;                     //操作人員
-                
-            $result = $RadarStatement->save();
-            }    
+                $optionsSave = array(
+                    // 'select' => 'odm022, odm029 AS fare, odm030 AS total',
+                    'conditions' => array(
+                        'odm001 IN (?) ',
+                        $tmp['id'],
+                    )
+                );
+                $openaccount = 1;
+                $saveOrder = Order::find('first', array('conditions' => array( 'odm001 = ?', $tmp['id']))) ?: new Order;
+                $saveOrder->odm035 = $openaccount;
+                $saveOrder->save();
+
+                $RadarStatement = RadarStatement::find('first', array('conditions' => array( 'rat006 = ? ', $saveOrder->odm001)))
+                    ?: new RadarStatement;
+                // $RadarStatement = new RadarStatement;
+                $RadarStatement->rat002 = $tmp['lv2id'] ?: 0;                   //雷達站編號
+                $RadarStatement->rat003 = $tmp['total'] ?: 0;                   //實收金額
+                $RadarStatement->rat004 = date("Y-m-d H:i:s") ?: null;          //核帳日期
+                $RadarStatement->rat005 = $account ?: null;                     //操作人員
+                $RadarStatement->rat006 = $saveOrder->odm001;
+
+                $result = $RadarStatement->save();
+            }
         }else{
             return $this->fail('無此資料。');
             // return array(
             //         'err' => 1,
             //         'msg' => "無此資料",
-            //     );    
+            //     );
         }
         return $this->success();
         // return array(
         //         'err' => ($result ? 0 : 1),
         //         'msg' => ($result ? Lang::get('save.success') : Lang::get('save.fail')),
         //     );
-        
+
     }
 
 }

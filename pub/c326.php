@@ -13,7 +13,7 @@ class c326 extends pub\GatewayApi{
         $id = User::get('id');
         $name = User::get('name');
         $account = User::get('account');
-        
+
         if (count($checkData) == 0) return ;
         $options = array(
             'conditions' => array(
@@ -23,8 +23,8 @@ class c326 extends pub\GatewayApi{
                 $date2
             ),
         );
-        
-        // for ($i=0; $i < count($checkData); $i++) { 
+
+        // for ($i=0; $i < count($checkData); $i++) {
             $order = Order::find('all', $options);
             $count = intval(Order::count($options));
 
@@ -33,17 +33,17 @@ class c326 extends pub\GatewayApi{
                 foreach ($order as $row) {
                     $tmp = $row->attributes(true);
                     $rows[] = $tmp;
-                    
+
                     $openaccount = 0;
                     $saveOrder = Order::find('first', array('conditions' => array( 'odm001 = ?', $tmp['sn']))) ?: new Order;
                     $saveOrder->odm035 = $openaccount;
                     $saveOrder->save();
 
-                    $RadarStatement = RadarStatement::find('first', array('conditions' => array( 'rat003 = ?', $tmp['money']))) ?: new RadarStatement;
+                    $RadarStatement = RadarStatement::find('first', array('conditions' => array( 'rat006 = ?', $saveOrder->odm001))) ?: new RadarStatement;
                     $result = $RadarStatement->delete();
 
                 }
-                return $this->success();   
+                return $this->success();
             }else{
                 return $this->fail(Lang::get('save.fail'));
             }
@@ -53,7 +53,7 @@ class c326 extends pub\GatewayApi{
         //         'err' => ($result ? 0 : 1),
         //         'msg' => ($result ? Lang::get('save.success') : Lang::get('save.fail')),
         //     );
-        
+
     }
 
 }

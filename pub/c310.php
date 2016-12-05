@@ -23,7 +23,7 @@ class c310 {
 
         $date1 = Input::post('date1');
         $date2 = Input::post('date2');
-        $params = array_merge(array($date1, $date2, $date1, $date2), $params);
+        $params = array_merge(array($date1, $date2), $params);
         $page = intval(Input::post('page')) ?: 1;
         $rp = intval(Input::post('rp')) ?: 10;
         $offset = ($page - 1) * $rp;
@@ -35,20 +35,24 @@ class c310 {
             '       SELECT odm022, ',
             '           SUM(odm029) AS fare,',
             '           SUM(odm030) AS total,',
-            '           SUM(odm032) AS rejecttotal',
-            '       FROM order_manager',
-            "       WHERE odm005 > '0000-00-00' AND odm005 BETWEEN ? AND ?",
-            '       GROUP BY odm022',
-            '   ) AS todr ON (odm022 = age001) ',
-            '   LEFT JOIN (',
-            '       SELECT rat002,',
+            '           SUM(odm032) AS rejecttotal,',
             '           SUM(rat003) AS rtotal,',
             '           rat004 as dateCheck,',
             '           rat005 as users',
-            '       FROM radar_statement',
-            '       WHERE rat004 BETWEEN ? AND ?',
-            '       GROUP BY rat002',
-            '   ) AS trds ON (rat002 = age001)',
+            '       FROM order_manager',
+            '       LEFT JOIN radar_statement ON (odm001 = rat006)',
+            "       WHERE odm005 > '0000-00-00' AND odm005 BETWEEN ? AND ?",
+            '       GROUP BY odm022',
+            '   ) AS todr ON (odm022 = age001) ',
+            // '   LEFT JOIN (',
+            // '       SELECT rat002,',
+            // '           SUM(rat003) AS rtotal,',
+            // '           rat004 as dateCheck,',
+            // '           rat005 as users',
+            // '       FROM radar_statement',
+            // '       WHERE rat004 BETWEEN ? AND ?',
+            // '       GROUP BY rat002',
+            // '   ) AS trds ON (rat002 = age001 AND odm001 = rat006)',
             "   {$where}",
             ') AS tab',
             "ORDER BY total DESC",

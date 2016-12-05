@@ -22,10 +22,11 @@ class w0 extends pub\GatewayApi{
         if ($result) {
 
             $member = Member::find_by_mem001(User::get('id'));
-
+            $user = $member->loginMemberData();
+            $user['no'] = $user['code'];
             return array(
                 'status' => true,
-                'user' => $member->loginMemberData(),
+                'user' => $user,
                 'fare_lower_limit' => intval(Setting::value('FareLowerLimit')),
                 // 'lang' => Lang::get(),
             );

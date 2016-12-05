@@ -88,6 +88,8 @@ class w104 extends pub\GatewayApi{
             'products' => array_values($products),   //產品資訊
             'real_point' => $real_point,
             'total' => $total,
+            # 免運費低消
+            'fare_lower_limit' => intval(Setting::value('FareLowerLimit')),
         );
     }
 

@@ -6,12 +6,18 @@
  * http://jquery.org/license
  *
  */
-(function ($) {
+((function(factory) {
+	if (typeof define === 'function' && define.amd) {
+		define(['jquery'], factory);
+	} else {
+		factory(jQuery);
+	}
+})(function ($) {
 	/*
-	 * jQuery 1.9 support. browser object has been removed in 1.9 
+	 * jQuery 1.9 support. browser object has been removed in 1.9
 	 */
 	var browser = $.browser
-	
+
 	if (!browser) {
 		function uaMatch( ua ) {
 			ua = ua.toLowerCase();
@@ -44,7 +50,7 @@
 			browser.safari = true;
 		}
 	}
-	
+
     /*!
      * START code from jQuery UI
      *
@@ -54,11 +60,11 @@
      *
      * http://docs.jquery.com/UI
      */
-     
+
     if(typeof $.support.selectstart != 'function') {
         $.support.selectstart = "onselectstart" in document.createElement("div");
     }
-    
+
     if(typeof $.fn.disableSelection != 'function') {
         $.fn.disableSelection = function() {
             return this.bind( ( $.support.selectstart ? "selectstart" : "mousedown" ) +
@@ -67,9 +73,9 @@
             });
         };
     }
-    
+
     /* END code from jQuery UI */
-    
+
 	$.addFlex = function (t, p) {
 		if (t.grid) return false; //return if already exist
 		p = $.extend({ //apply default properties
@@ -597,6 +603,9 @@
 				stat = stat.replace(/{to}/, r2);
 				stat = stat.replace(/{total}/, p.total);
 				$('.pPageStat', this.pDiv).html(stat);
+
+				/* 定訂義功能, 用來記錄頁數 */
+				$(t).data('current.page', p.page);
 			},
 			populate: function () { //get latest data
 				if (this.loading) {
@@ -653,6 +662,7 @@
 						param[param.length] = p.params[pi];
 					}
 				}
+				var self = this;
 				$.ajax({
 					type: p.method,
 					url: p.url,
@@ -662,6 +672,10 @@
 						g.addData(data);
 					},
 					error: function (XMLHttpRequest, textStatus, errorThrown) {
+						$('.pReload', self.pDiv).removeClass('loading');
+						$('.pPageStat', self.pDiv).html(p.errormsg);
+						$(g.block).remove();
+						self.loading = false;
 						try {
 							if (p.onError) p.onError(XMLHttpRequest, textStatus, errorThrown);
 						} catch (e) {}
@@ -896,9 +910,9 @@
 			},
 			pager: 0
 		};
-        
+
         g = p.getGridClass(g); //get the grid class
-        
+
 		if (p.colModel) { //create model if any
 			thead = document.createElement('thead');
 			var tr = document.createElement('tr');
@@ -955,11 +969,11 @@
 		g.tDiv = document.createElement('div'); //create toolbar
 		g.sDiv = document.createElement('div');
 		g.pDiv = document.createElement('div'); //create pager container
-        
+
         if(p.colResize === false) { //don't display column drag if we are not using it
             $(g.cDrag).css('display', 'none');
         }
-        
+
 		if (!p.usepager) {
 			g.pDiv.style.display = 'none';
 		}
@@ -967,7 +981,7 @@
 		g.gDiv.className = 'flexigrid';
 		if (p.width != 'auto') {
 			g.gDiv.style.width = p.width + (isNaN(p.width) ? '' : 'px');
-		} 
+		}
 		//add conditional classes
 		if (browser.msie) {
 			$(g.gDiv).addClass('ie');
@@ -1098,13 +1112,13 @@
 			if (!p.colmodel) {
 				$(this).attr('axis', 'col' + ci++);
 			}
-			
+
 			// if there isn't a default width, then the column headers don't match
 			// i'm sure there is a better way, but this at least stops it failing
 			if (this.width == '') {
 				this.width = 100;
 			}
-			
+
 			$(thdiv).css({
 				textAlign: this.align,
 				width: this.width + 'px'
@@ -1283,7 +1297,7 @@
 				g.changePage('last');
 			});
 			$('.pcontrol input', g.pDiv).keydown(function (e) {
-				if (e.keyCode == 13) { 
+				if (e.keyCode == 13) {
                     g.changePage('input');
 				}
 			});
@@ -1496,15 +1510,7 @@
 					$.addFlex(t, p);
 				});
 			} else {
-				/**
-				 * 修正動態產生的 grid, 會發生 onSubmit 執行比變數產生的時間還早
-				 * 造成 .flexOptions 對象是 null 
-				 */
-				var _this = this;
-				setTimeout(function() { $.addFlex(_this, p); }, 0);
-				/* 修正程式碼 end  */
-				
-				// $.addFlex(this, p);
+				$.addFlex(this, p);
 			}
 		});
 	}; //end flexigrid
@@ -1568,7 +1574,7 @@
 				var col = cell.abbr;
 				var val = cell.firstChild.innerHTML;
 				if (val == '&nbsp;') val = '';      // Trim the content
-        		        var idx = cell.cellIndex;                
+        		        var idx = cell.cellIndex;
 
 				arRow.push({
 					Column: col,        // Column identifier
@@ -1581,4 +1587,4 @@
 		});
 		return arReturn;
 	};
-})(jQuery);
+}));

@@ -32,8 +32,8 @@
             app.$wrapper.on('click', '.item-checkbox', app.selectMember);
             // app.$all_checked.bind('click', app.onClickAllChecked);
             app.$notice_for.bind('change', app.onChangeNoticeFor);
-            app.$query_button.bind('click', function() { 
-                app.grid.flexReload(); 
+            app.$query_button.bind('click', function() {
+                app.grid.flexReload();
             });
             app.$checkRadar.bind('click', function() {
                 app.oncheckRadar();
@@ -58,7 +58,7 @@
             if(confirm("確定是否取消核帳？")){
                 Endold
                     .post(326, {checkData:app.rows,date1:date1,date2:date2})
-                    .done(app.requestRadar);    
+                    .done(app.requestRadar);
             }
         },
         oncheckRadar: function() {
@@ -73,7 +73,7 @@
                     .post(316, {checkData:app.rows,date1:date1,date2:date2})
                     .done(app.requestRadar)
             }
-            
+
         },
         requestRadar: function(response) {
             if (! response.status) alert(response.message);
@@ -124,23 +124,21 @@
         },
         searchData: function() {
             var data = $searchForm.serializeArray();
-            console.log(data);
             grid.flexOptions({params: data});
             return true;
         },
         gridReload: function(event) {
-            console.log('run');
             event && event.preventDefault();
             grid.flexReload();
         }
     };
 
-    
+
 
     var grid = $('#order-list').flexigrid({
         url: Endold.cmdTo(309),
         dataType: 'json',
-        colModel: [ 
+        colModel: [
             {
                 display: '<input class="all-checked" type="checkbox"/>',
                 name: 'openaccount',
@@ -148,7 +146,6 @@
                 align: 'center',
                 process: function(div, sn) {
                     var openaccount = Number(div.innerHTML);
-                    console.info(sn);
                     // if(openaccount===0){
                         var $input = $('<input type="checkbox" class="item-checkbox"/>');
 
@@ -159,41 +156,41 @@
                             .prop('checked', $.inArray(sn, app.rows) >= 0);
 
                         $(div).html($input)
-                            .addClass('cursor-point');    
+                            .addClass('cursor-point');
                     // }else{
                     //     div.innerHTML = "-";
                     // }
-                    
+
                 }
             // {
             //    display: '序號',
-            //    name: 'sn', 
-            //    width: 150, 
-            //    align: 'center', 
+            //    name: 'sn',
+            //    width: 150,
+            //    align: 'center',
             }, {
                display: '訂單編號',
-               name: 'oid', 
-               width: 150, 
+               name: 'oid',
+               width: 150,
                align: 'center'
             }, {
                display: '金額',
-               name: 'total', 
-               width: 100, 
+               name: 'total',
+               width: 100,
                align: 'center'
             }, {
                display: '應收款項',
-               name: 'money', 
-               width: 100, 
+               name: 'money',
+               width: 100,
                align: 'center'
             }, {
                display: '使用購物金',
-               name: 'coupon', 
-               width: 100, 
+               name: 'coupon',
+               width: 100,
                align: 'center'
             }, {
                display: '月結狀態',
-               name: 'openaccountStatus', 
-               width: 100, 
+               name: 'openaccountStatus',
+               width: 100,
                align: 'center'
             }
 

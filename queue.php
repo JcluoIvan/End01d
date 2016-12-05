@@ -19,10 +19,10 @@
         'select' => 'DATEDIFF(CURDATE(), odm006) AS days, odm006 AS date',
         'conditions' => array('odm006 IS NOT NULL AND odm031 IS NULL'),
         'group' => 'odm006',
-        'having' => 'days >= ' . $clearing_date 
+        'having' => 'days >= ' . $clearing_date
     );
     $rows = Order::all($options);
-    
+
     if (count($rows) === 0) exit(' no data ');
 
     $c361 = new c361;
@@ -31,11 +31,11 @@
         $_POST = array('days' => $row->days);
         try {
             $c361->run();
+            echo "{$row->date} OK \n";
         } catch (Exception $e) {
             var_dump($e);
             echo "{$row->date} Error";
         }
-        echo "{$row->date} OK";
     }
 
 

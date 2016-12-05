@@ -4,7 +4,7 @@ use model\AppRegister;
 use model\Setting;
 class c361 extends pub\GatewayApi {
 
-    public function run() 
+    public function run()
     {
         $rows = Order::with(
             Order::all($this->options()),
@@ -12,7 +12,7 @@ class c361 extends pub\GatewayApi {
         );
 
         $today = date('Y/m/d');
-
+        exit($today);
         /* 是否推播通知 */
         $app_push = Setting::value('GrantNoticeByApp', 0) ? true : false;
         foreach ($rows as $row) {
@@ -44,17 +44,18 @@ class c361 extends pub\GatewayApi {
     public function date() {
         $clearing = System::get('clearing_date');
         $days = intval(Input::post('days')) ?: 0;
-        if ($days < $clearing) $this->fail("交易未滿 {$clearing} 天，不能結算");
-
+        if ($days < $clearing) {
+            exit(json_encode($this->fail("交易未滿 {$clearing} 天，不能結算")));
+        }
         $date = new DateTime;
         $date->sub(new DateInterval("P{$days}D"));
         return $date->format('Y/m/d');
     }
 
-    public function options() 
+    public function options()
     {
         $options = array(
-            'conditions' => array('odm006 = ? AND odm031 IS NULL', $this->date()),
+            'conditions' => array('odm006 = ? AND odm005 IS NOT NULL AND odm031 IS NULL', $this->date()),
         );
         return $options;
     }
