@@ -25,7 +25,11 @@ class w201 extends pub\GatewayApi{
             : Member::find_by_mem028($code);
 
         if ($parent) {
-
+            $id = $code[0] === 'A' ? $parent->age001 : $parent->mem001;
+            $count = Member::count(array('conditions' => array('mem020 = ?', $id)));
+            if ($count >= 3) {
+                return $this->fail('已達會員上限');
+            }
             $columns = array('id', 'no', 'account', 'name');
             $row = $parent->attributes($columns);
             $row['type'] = $parent instanceof Member ? 'M' : 'A';
@@ -38,8 +42,8 @@ class w201 extends pub\GatewayApi{
     public function downloadApp() {
         $app = 'endold.apk';
         header('Content-Type: application/octet-stream');
-        header("Content-Transfer-Encoding: Binary"); 
-        header("Content-disposition: attachment; filename=\"" . basename($app) . "\""); 
+        header("Content-Transfer-Encoding: Binary");
+        header("Content-disposition: attachment; filename=\"" . basename($app) . "\"");
         readfile(URI::path($app)); // do the double-download-dance (dirty but worky)
     }
 }

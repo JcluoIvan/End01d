@@ -27,7 +27,6 @@
             app.bindEvents();
         },
         bindEvents: function() {
-            console.log(app.$all_checked);
             app.$wrapper.on('change', '.hDivBox .all-checked', app.onClickAllChecked);
             app.$wrapper.on('click', '.item-checkbox', app.selectMember);
             // app.$all_checked.bind('click', app.onClickAllChecked);
@@ -64,10 +63,6 @@
         oncheckRadar: function() {
             var date1 = $('#year').val();
             var date2 = $('#month').val();
-            // total = app.total;
-            console.log(app.rows);
-            // console.log(app.total);
-            // return Endold.post(316, {money:total,checkData:app.rows,year:year,month:month});
             if(confirm("確定是否核帳？")){
                 Endold
                     .post(316, {checkData:app.rows,date1:date1,date2:date2})
@@ -146,20 +141,16 @@
                 align: 'center',
                 process: function(div, sn) {
                     var openaccount = Number(div.innerHTML);
-                    // if(openaccount===0){
-                        var $input = $('<input type="checkbox" class="item-checkbox"/>');
+                    var $input = $('<input type="checkbox" class="item-checkbox"/>');
 
-                        sn = Number(sn);
-                        $input
-                            .data('member.id', sn)
-                            // .data('member.total', total)
-                            .prop('checked', $.inArray(sn, app.rows) >= 0);
+                    sn = Number(sn);
+                    $input
+                        .data('member.id', sn)
+                        // .data('member.total', total)
+                        .prop('checked', $.inArray(sn, app.rows) >= 0);
 
-                        $(div).html($input)
-                            .addClass('cursor-point');
-                    // }else{
-                    //     div.innerHTML = "-";
-                    // }
+                    $(div).html($input)
+                        .addClass('cursor-point');
 
                 }
             // {

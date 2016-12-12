@@ -75,7 +75,7 @@
 function fastdata(a){//1今日,2昨日,3本週,4上週,5本月,6上月
   data1=document.getElementById("date1");
   data2=document.getElementById("date2");
-  today=Date.today();
+  today = Date.today();
   var d1, d2, d3, weekday;
   switch(a){
     // 本日
@@ -135,15 +135,15 @@ function fastdata(a){//1今日,2昨日,3本週,4上週,5本月,6上月
       d2 = Date.parse('today');
       break;
   }
-  data1.value=d1.toString("yyyy-MM-dd");
-  data2.value=d2.toString("yyyy-MM-dd");
+  data1.value = d1.toString("yyyy-MM-dd");
+  data2.value = d2.toString("yyyy-MM-dd");
 }
 
 
 function zzday(){
   var data1=document.getElementById('date1');
   var data2=document.getElementById('date2');
-  }
+}
 
 fastdata(1);
 

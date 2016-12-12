@@ -85,7 +85,7 @@ class c310 {
                 'is_locked' => $row['age025'],
             );
             $data['DateCheck'] = $row['datecheck'] ?: null;
-            $data['total'] = ($row['total'] - $row['rejecttotal']) ?: 0;
+            $data['total'] = (($row['total'] - $row['rejecttotal']) ?: 0) - ($row['rtotal'] ?: 0);
             $data['fare'] = $row['fare'] ?: 0;
             $data['rtotal'] = $row['rtotal'] ?: 0;
             $data['users'] = $row['users'] ?: null;

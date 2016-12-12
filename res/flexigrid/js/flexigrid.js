@@ -1510,7 +1510,15 @@
 					$.addFlex(t, p);
 				});
 			} else {
-				$.addFlex(this, p);
+				/**
+				 * 修正動態產生的 grid, 會發生 onSubmit 執行比變數產生的時間還早
+				 * 造成 .flexOptions 對象是 null
+				 */
+				var _this = this;
+				setTimeout(function() { $.addFlex(_this, p); }, 0);
+				/* 修正程式碼 end  */
+
+				// $.addFlex(this, p);
 			}
 		});
 	}; //end flexigrid

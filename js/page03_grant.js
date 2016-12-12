@@ -18,11 +18,11 @@
         },
         request: function(response) {
             if (! response.status) return alert(response.message);
-            
+
             app.gridReload();
 
         },
-        viewPend: function() { 
+        viewPend: function() {
 
         },
         viewFinish: function() {
@@ -63,22 +63,22 @@
                 }
             }, {
                 display: '交易金額',
-                name: 'money', 
+                name: 'money',
                 width: 60,
                 align: 'center'
             }, {
                 display: '交易日期',
-                name: 'completed_at', 
+                name: 'completed_at',
                 width: 80,
                 align: 'center'
             }, {
                 display: '執行計算',
-                name: 'do_clearing', 
+                name: 'do_clearing',
                 width: 120,
                 align: 'center',
                 process: function(div, days) {
                     var $a = $('<a class="link-option">執行</a>');
-                    var days = parseInt(days, 10);
+                    var days = parseInt(days, 10) || 0;
                     $a.data('data.days', days)
                         .bind('click', app.run);
                     if (days < app.clearing_date) {
@@ -132,22 +132,22 @@
                         align: 'center'
                     }, {
                         display: '交易日',
-                        name: 'date1', 
+                        name: 'date1',
                         width: 100,
                         align: 'center'
                     }, {
                         display: '核帳日',
-                        name: 'date2', 
+                        name: 'date2',
                         width: 100,
                         align: 'center'
                     }, {
                         display: '獎金、購物金計算日',
-                        name: 'date3', 
+                        name: 'date3',
                         width: 120,
                         align: 'center'
                     }, {
                         display: '總金額',
-                        name: 'money', 
+                        name: 'money',
                         width: 160,
                         align: 'center'
                     }, {

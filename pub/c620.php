@@ -34,10 +34,10 @@ class c620 {
                 $this->getOptions(true)
             ),
         );
-        
+
     }
 
-    private function getOptions($getCount = false) 
+    private function getOptions($getCount = false)
     {
         /* 目前頁數 */
         $page = Input::post('page') ?: 1;
@@ -53,27 +53,37 @@ class c620 {
 
         /* mem_phone */
         $register_where = '1';
-        $where = 'mem.mem011';
-
-        if ($searchKind == 'mem_no'){
-            $where = 'mem.mem002';
-            if ($search) $register_where = "mem002 LIKE '%" . mysql_escape_string($search) . "%'";
+        $mem_where = 1;
+        switch ($searchKind) {
+            case 'mem_phone':
+                $mem_where = "mem.mem011 LIKE '%" . mysql_escape_string($search) . "%'";
+                break;
+            case 'mem_no':
+                $mem_where = "mem.mem002 LIKE '%" . mysql_escape_string($search) . "%'";
+                if ($search) $register_where = "mem002 LIKE '%" . mysql_escape_string($search) . "%'";
+                break;
+            case 'mem_name':
+                $mem_where = "mem.mem005 LIKE '%" . mysql_escape_string($search) . "%'";
+                if ($search) $register_where = "mem005 LIKE '%" . mysql_escape_string($search) . "%'";
+                break;
         }
-        if ($searchKind == 'mem_name'){
-            $where = 'mem.mem005';
-            if ($search) $register_where = "mem005 LIKE '%" . mysql_escape_string($search) . "%'";
+        $age_where = 1;
+        switch ($searchKind) {
+            case 'age_phone':
+                $age_where = "age012 LIKE '%" . mysql_escape_string($search) . "%'";
+                break;
+            case 'age_no':
+                $age_where = "age003 LIKE '%" . mysql_escape_string($search) . "%'";
+                break;
+            case 'age_name':
+                $age_where = "age006 LIKE '%" . mysql_escape_string($search) . "%'";
+                break;
         }
-        if ($searchKind == 'age_phone')
-            $where = 'age012';
-        if ($searchKind == 'age_no')
-            $where = 'age003';
-        if ($searchKind == 'age_name')
-            $where = 'age006';
 
-        $sql = "SELECT tab.* 
+        $sql = "SELECT tab.*
                        , age003 AS age_no
                 FROM (
-                    SELECT 
+                    SELECT
                         '註冊加值' AS ono
                         #核帳日期
                         , '' AS verification_date
@@ -103,11 +113,11 @@ class c620 {
                     FROM member_point_record
                         LEFT JOIN member ON (mem001 = mpr002)
 
-                    WHERE 
+                    WHERE
                         mpr003 = 'register'
                         AND mem006 BETWEEN ? AND ?
                         AND {$register_where}
-                    UNION 
+                    UNION
                     SELECT
                         #訂單編號
                         odm002 AS ono
@@ -161,22 +171,22 @@ class c620 {
                         DATE(odm031) BETWEEN ? AND ?
                         #memberId
                         AND odm013 = mem.mem001
+                        AND {$mem_where}
                         #agentId
                         # AND odm012 = age.age001
-
-                        AND {$where} like ?
 
                     GROUP BY
                         odm001, odm002
                 ) AS tab
                 LEFT JOIN agent ON parent_id = age001
+                WHERE {$age_where}
                 ORDER BY give_date DESC
                     #ORDER BY
                     #    #入帳日期
                     #    odm031 DESC
         ";
 
-        $values = array("{$date1} 00:00:00", "{$date2} 23:59:59", "{$date1}", "{$date2}", "%{$search}%");
+        $values = array("{$date1} 00:00:00", "{$date2} 23:59:59", "{$date1}", "{$date2}");
 
         // print_r($sql);
         // print_r($values);

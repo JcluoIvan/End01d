@@ -12,7 +12,6 @@ class c361 extends pub\GatewayApi {
         );
 
         $today = date('Y/m/d');
-        exit($today);
         /* 是否推播通知 */
         $app_push = Setting::value('GrantNoticeByApp', 0) ? true : false;
         foreach ($rows as $row) {
