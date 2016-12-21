@@ -30,7 +30,7 @@ class c740 {
                 $this->getOptions(true)
             ),
         );
-        
+
     }
 
     private function getOptions($getCount = false)
@@ -66,20 +66,21 @@ class c740 {
 
                 FROM order_manager
                         LEFT JOIN
-                            bonus AS bon 
+                            bonus AS bon
                             ON (odm001 = bon002 AND odm021 = bon003)
                         ,agent AS age
                 WHERE
                     #核帳日期
                     odm005 BETWEEN ? AND ?
                     #購物金入帳日期
-                    AND odm031 NOT IN ('null', '0000-00-00', '')
+                    AND (odm031 IS NOT NULL AND odm031 > 0)
                     #agentId
                     AND odm021 = age.age001
                     #搜尋
                     AND {$where} like ?
                     #獎金未核帳
                     AND bon.bon004 IS NULL
+                    AND odm041 IS NULL
                 GROUP BY
                     odm021, odm026
                 ORDER BY

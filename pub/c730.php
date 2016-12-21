@@ -29,7 +29,7 @@ class c730 {
                 $this->getOptions(true)
             ),
         );
-        
+
     }
 
     private function getOptions($getCount = false)
@@ -54,7 +54,7 @@ class c730 {
         if ($searchKind == 'name')
             $where = 'age.age006';
 
-        $sql = "SELECT 
+        $sql = "SELECT
                 odm001 AS oid
                 #訂單編號no
                 ,odm002 AS ono
@@ -81,21 +81,21 @@ class c730 {
                 #獎金核帳日
                 , bon.bon004 AS bonus_verification
 
-                FROM 
+                FROM
                     order_manager
                         , bonus AS bon
                         , agent AS age
 
                 WHERE
                     #訂單核帳日期
-                    odm005 NOT IN ('null', '0000-00-00', '')
+                    AND (odm005 IS NOT NULL AND odm005 > 0)
                     #購物金入帳日期
-                    AND odm031 NOT IN ('null', '0000-00-00', '')
+                    AND (odm031 IS NOT NULL AND odm031 > 0)
                     #agentId
                     AND odm021 = age.age001
                     #顯示指揮站
-                    AND age.age018 in (0) 
-                    
+                    AND age.age018 in (0)
+
                     #獎金核帳日
                     AND bon004 BETWEEN ? AND ?
                     AND odm001 = bon002
@@ -103,10 +103,11 @@ class c730 {
 
                     #搜尋
                     AND {$where} like ?
+                    AND odm041 IS NULL
 
                 GROUP BY
                     odm001
-                ORDER BY 
+                ORDER BY
                     #指揮站 #核帳日期
                     odm021, bon004 DESC
                 ";

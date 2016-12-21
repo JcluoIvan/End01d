@@ -8,7 +8,7 @@
         <ol class="breadcrumb">
             <li class="active">獎金發放- 專業經理人</li>
         </ol>
-        <h3 class="title-bar"> 
+        <h3 class="title-bar">
             <label> 獎金發放 - 專業經理人</label>
         </h3>
         <form class="form-inline" id="form-search">
@@ -46,6 +46,7 @@
 
     </div>
     <script type="text/javascript" src="/js/page07_leader_give_bonus.js?{{$smarty.now}}"></script>
+    <script type="text/javascript" src="/js/page07_leader_bonus_detail_list.js?{{$smarty.now}}"></script>
     <script>
         fastdata(5);
         function fastdata(a){   //1今日,2昨日,3本週,4上週,5本月,6上月

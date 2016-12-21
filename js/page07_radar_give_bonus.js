@@ -1,5 +1,5 @@
 (function(Endold, OptionBar) {
-
+    var VIEW_URL = '/page/page07/radar_bonus_detail_list.php';
     var $formSearch = null;
     var $searchBtn = null;
     var $print = null;
@@ -38,9 +38,10 @@
 
             data.push({'name': 'aid', 'value': aid});
             data.push({'name': 'oid', 'value': oid});
-
-            Endold.post(712, data)
-                .done(app.reloadGrid);
+            if (confirm('確定核帳？')) {
+                Endold.post(712, data)
+                    .done(app.reloadGrid);
+            }
             app.stopEvent();
 
         },
@@ -64,7 +65,7 @@
         optionElement: $('#option-bar'),
         mainElement: $('#option-main'),
         formElement: '#option-form',
-        height: 200,
+        height: 350,
         onModify: function() {
             var $oid = $(this).attr('oid') || 0;
             var url = $(this).attr('url');
@@ -73,7 +74,15 @@
                 url, {oid: $oid}
             );
         },
+        onView: function() {
+            var $this = $(this);
+            var oid = $this.data('oid');
+            return Endold.linkTo(VIEW_URL, {oid: oid});
+        },
         onSave: function() {
+        },
+        onShow: function() {
+            RadarDetailList && RadarDetailList.init();
         },
         onSaveRequest: function(r) {
         },
@@ -99,18 +108,35 @@
             }, {
                 display: '應付獎金統計',
                 name: 'bonus',
-                width: 200, 
-                align: 'center', 
+                width: 200,
+                align: 'center',
             }, {
                 display: '%',
                 name: 'percent',
-                width: 200, 
-                align: 'center', 
+                width: 200,
+                align: 'center',
+            }, {
+                display: '詳細清單',
+                name: 'oid',
+                width: 100,
+                align: 'center',
+                process: function(div, aid) {
+                    var $div = $(div);
+                    var oid = $div.html();
+                    $('<a href="#"/>')
+                        .data('oid', oid)
+                        .html('清單列表')
+                        .bind('click', function(e) {
+                            option.view.apply(this);
+                            e.preventDefault();
+                        })
+                        .appendTo($div.empty());
+                }
             }, {
                 display: '核帳',
                 name: 'oid',
-                width: 200, 
-                align: 'center', 
+                width: 200,
+                align: 'center',
                 process: function(div, aid) {
                     var $div = $(div);
                     var $oid = $div.html();
@@ -121,7 +147,7 @@
                         .data('aid', aid)
                         .data('oid', $oid)
                         .html('核帳')
-                        .bind('click', app.verification)
+                        .bind('click', option.view)
                         .appendTo($div);
 
                }
