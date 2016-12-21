@@ -88,7 +88,7 @@ class c730 {
 
                 WHERE
                     #訂單核帳日期
-                    AND (odm005 IS NOT NULL AND odm005 > 0)
+                    (odm005 IS NOT NULL AND odm005 > 0)
                     #購物金入帳日期
                     AND (odm031 IS NOT NULL AND odm031 > 0)
                     #agentId
