@@ -40,9 +40,10 @@
 
             data.push({'name': 'aid', 'value': aid});
             data.push({'name': 'oid', 'value': oid});
-
-            Endold.post(712, data)
-                .done(app.reloadGrid);
+            if (confirm('確定核帳？')) {
+                Endold.post(712, data)
+                    .done(app.reloadGrid);
+            }
             app.stopEvent();
 
         },
