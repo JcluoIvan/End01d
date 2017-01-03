@@ -147,7 +147,7 @@
                         .data('aid', aid)
                         .data('oid', $oid)
                         .html('核帳')
-                        .bind('click', option.view)
+                        .bind('click', app.verification)
                         .appendTo($div);
 
                }

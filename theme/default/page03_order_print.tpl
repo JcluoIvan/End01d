@@ -9,13 +9,15 @@
             <thead>
                 <tr>
                     <th>訂單編號</th>
+                    <th>交易金額</th>
+                    <th>購物金</th>
                     <th>總金額</th>
                     <th>收款日期</th>
                     <th>出（取）貨日期</th>
                     <th>核帳日期</th>
                     <th>付款方式</th>
                     <th>取貨方式</th>
-                    <th>專業經理人編號</th>
+                    <th>訂貨人</th>
                     <th>展示中心編號</th>
                     <th>宅配單號（取貨序號）</th>
                 </tr>
@@ -24,13 +26,15 @@
             {{foreach from=$rows item=row}}
                 <tr>
                     <td>{{$row.oid}}</td>
-                    <td>{{$row.total}}</td>
+                    <td>{{$row.total - $row.reject_shopgold}}</td>
+                    <td>{{$row.coupon - $row.reject_point}}</td>
+                    <td>{{$row.money}}</td>
                     <td>{{$row.date3}}</td>
                     <td>{{$row.date2}}</td>
                     <td>{{$row.check_date}}</td>
                     <td>{{$row.methods}}</td>
                     <td>{{$row.getmode}}</td>
-                    <td>{{$row.lv1id}}</td>
+                    <td>{{$row.name}}</td>
                     <td>{{$row.lv2id}}</td>
                     <td>{{$row.getno}}</td>
                 </tr>

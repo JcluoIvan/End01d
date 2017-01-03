@@ -81,6 +81,8 @@ class c740 {
                     #獎金未核帳
                     AND bon.bon004 IS NULL
                     AND odm041 IS NULL
+                    AND odm001 IN (SELECT rat001 FROM radar_statement)
+
                 GROUP BY
                     odm021, odm026
                 ORDER BY
